@@ -1,0 +1,20 @@
+{
+  "display": "common",
+  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "src/*": [
+        "src/*"
+      ]
+    },
+    "outDir": "dist"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "src/**/tests/*.test.ts"
+  ]
+}
