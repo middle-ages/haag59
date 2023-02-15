@@ -1,0 +1,18 @@
+{
+  "display": "build",
+  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": true,
+    "importsNotUsedAsValues": "remove",
+    "incremental": true,
+    "outDir": "esm",
+    "sourceMap": true,
+    "tsBuildInfoFile": "esm/.tsbuildinfo"
+  },
+  "references": [
+    { "path": "../commons/tsconfig.json" },
+    { "path": "../geometry/tsconfig.json" }
+  ],
+  "exclude": ["esm", "tests", "node_modules"]
+}

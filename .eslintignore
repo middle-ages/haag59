@@ -1,0 +1,8 @@
+node_modules
+esm
+test-data
+test-results
+coverage
+*.log
+.vscode
+.eslintrc.cjs
