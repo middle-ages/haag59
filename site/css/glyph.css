@@ -1,0 +1,53 @@
+.glp {
+  --w: var(--glyph-size);
+  width: var(--w);
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+}
+
+.glp > svg,
+.glp > div:first-child,
+.glp > div:first-child > div {
+  width: var(--w);
+  height: var(--w);
+}
+
+.glp > div:first-child {
+  background: var(--glyph-bg);
+}
+
+.glp > div:first-child > div {
+  background: var(--glyph-ink);
+}
+
+.glp:active > div:first-child {
+  background: var(--glyph-bg-active) !important;
+}
+
+.glp:active > div:first-child > div {
+  background: var(--glyph-ink-active) !important;
+}
+
+.glp:hover > div:first-child {
+  background: var(--glyph-bg-hover);
+}
+
+.glp:hover > div:first-child > div {
+  background: var(--glyph-ink-hover);
+}
+
+.glp > div:first-child > div {
+  --w: var(--glyph-base-size);
+  transform-origin: 0px 0px;
+  transform: scale(var(--glyph-scale));
+}
+
+.glp > svg {
+  --w: var(--glyph-base-size);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0px 0px;
+  transform: scale(var(--glyph-scale));
+}

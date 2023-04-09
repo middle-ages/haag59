@@ -1,0 +1,105 @@
+html[data-theme="light"] {
+  /* Glyph label background color */
+  --glyph-label-bg: #fbfbfb;
+  --glyph-label-bg-active: #ccf;
+  --glyph-label-bg-hover: #eef;
+
+  /* Glyph background color */
+  --glyph-bg: #ebebeb;
+  --glyph-bg-active: #aaf;
+  --glyph-bg-hover: #ddf;
+
+  /* Glyph ink background color and text fill color */
+  --glyph-ink: #000;
+  --glyph-ink-active: #00f;
+  --glyph-ink-hover: #008;
+
+  /* Glyph grid stroke color */
+  --glyph-grid-fg: #bbbbbb90;
+
+  /* Labels background color */
+  --label-bg: #fafafa;
+
+  /* Border body background color */
+  --border-bg: #c0c0c0;
+
+  /* Page background color */
+  --page-bg: #f0f0f0;
+
+  /* Diagram background color */
+  --diagram-bg: #dedede;
+
+  /* Diagram separator */
+  --diagram-sep: #666;
+}
+
+html[data-theme="light"] .hnd {
+  box-shadow: #00000060 1.2px 1.4px 2.4px 1.2px,
+    #00000090 0.5px 0.6px 1.5px 0.5px;
+}
+
+html[data-theme="light"] .hnd:hover {
+  filter: contrast(125%);
+  box-shadow: #00000080 1.2px 1.4px 2.4px 1.2px,
+    #000000b0 0.4px 0.5px 1.6px 0.4px;
+}
+
+html[data-theme="light"] .hnd:active {
+  box-shadow: #000000b0 0.4px 0.5px 1.4px 0.4px;
+  filter: contrast(140%);
+}
+
+html[data-theme="light"] .knb-o {
+  background: radial-gradient(
+    at top left,
+    #fff 0%,
+    #fff 10%,
+    #888 80%,
+    #555 100%
+  );
+}
+
+html[data-theme="light"] .rng {
+  background: conic-gradient(#888 0%, #999 20%, #ccc 35%, #666 85%, #888 100%);
+}
+
+html[data-theme="light"] .mon {
+  background: radial-gradient(at top left, #00c 0%, #006 60%, #001 100%);
+}
+
+html[data-theme="light"] .sun {
+  background: radial-gradient(at top left, #ccf 0%, #22c 80%, #002 100%);
+}
+
+html[data-theme="light"] .mon-i {
+  background: radial-gradient(at bottom right, #00d 0%, #005 60%, #002 100%);
+}
+
+html[data-theme="light"] .sun-i {
+  background: radial-gradient(at bottom right, #fe0 0%, #e90 70%, #b30 100%);
+}
+
+html[data-theme="light"] .mon-i > svg > path {
+  fill: #ffff55;
+}
+
+html[data-theme="light"] #ray-o > path {
+  fill: #ff8800;
+}
+
+html[data-theme="light"] #ray-y > path {
+  fill: #ffff00;
+}
+
+html[data-theme="light"] .bas {
+  background: linear-gradient(#777 0%, #888 20%, #aaa 80%, #ccc 100%);
+}
+
+html[data-theme="light"] .frm {
+  background: conic-gradient(#ccc 0%, #888 40%, #ccc 80%, #eee 90%, #ccc 100%);
+}
+
+html[data-theme="light"] .tng {
+  background: linear-gradient(#808080c0 0%, #a0a0a0e0 15%, #ccc 90%, #ddd 100%);
+  border: 1px solid #b0b0b0df;
+}
