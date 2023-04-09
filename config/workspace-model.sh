@@ -39,11 +39,11 @@ function list_projects {
 }
 
 export projects
-if [[ $# = 0 ]]
+if (( $# ))
 then
-  projects=$(list_projects)
-else
   projects="${*}"
+else
+  projects=$(list_projects)
 fi
 
 export project_list project_names
@@ -70,3 +70,7 @@ function workspace_install {
 function image_version {
   find doc | grep imagesV | sed -r  's|.*doc/imagesV([0-9])+/.*|\1|' | tail -1
 }
+
+export workspace_git packages_git
+workspace_git='github.com/middle-ages/haag59'
+packages_git="$workspace_git/tree/main/packages"

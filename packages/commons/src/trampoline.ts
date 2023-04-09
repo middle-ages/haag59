@@ -1,11 +1,10 @@
-import { either as EI, function as FN } from 'fp-ts';
-import { Unary } from './function.js';
+import { Lazy, EI, FN, Unary } from './fp-ts.js';
 
 const { pipe } = FN;
 
 const _tag = Symbol();
 
-export type Thunk<T> = FN.Lazy<Trampoline<T>>;
+export type Thunk<T> = Lazy<Trampoline<T>>;
 export type Wrapped<T> = EI.Either<Thunk<T>, T>;
 
 export interface Trampoline<T> {
@@ -20,7 +19,7 @@ const wrap = <T>(wrapped: Wrapped<T>): Trampoline<T> => ({ _tag, wrapped });
 export const finalResult = <T>(value: T): Trampoline<T> =>
   pipe(value, EI.right, wrap);
 
-export const delayResult = <T>(thunk: FN.Lazy<Trampoline<T>>): Trampoline<T> =>
+export const delayResult = <T>(thunk: Lazy<Trampoline<T>>): Trampoline<T> =>
   pipe(thunk, EI.left, wrap);
 
 /**

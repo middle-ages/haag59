@@ -1,28 +1,16 @@
-import {
-  array as AR,
-  function as FN,
-  number as NU,
-  readonlyArray as RA,
-  string as STR,
-  predicate as PRE,
-} from 'fp-ts';
-import { function as FNs, array as ARs, string as STRs } from 'fp-ts-std';
+import { AR, FN, NU, RA, STR, PRE, Unary, Endo } from './fp-ts.js';
 import { stringWidth } from 'tty-strings';
-import { Binary, BinaryC, Endo, Unary } from './function.js';
+import { Binary, BinaryC } from './function.js';
 import { floorMod } from './number.js';
-
-const { maximum } = ARs;
-const { curry2 } = FNs;
-const { lines: splitLines } = STRs;
 
 export const split =
     (re: RegExp): Unary<string, string[]> =>
     s =>
       s.split(re),
-  stringEq: Unary<string, PRE.Predicate<string>> = curry2(STR.Eq.equals),
+  stringEq: Unary<string, PRE.Predicate<string>> = FN.curry2(STR.Eq.equals),
   ucFirst: Endo<string> = s => s.charAt(0).toUpperCase() + s.slice(1),
   lines: Unary<string, string[]> = s =>
-    splitLines(s) as readonly string[] as string[];
+    STR.lines(s) as readonly string[] as string[];
 
 export const around: Binary<string, string, Endo<string>> =
   (left, right) => s =>
@@ -33,7 +21,7 @@ export const nChars: BinaryC<string, number, string> = c => n =>
   nSpaces: Unary<number, string> = nChars(' ');
 
 export const widestLine: Unary<string[], number> = lines =>
-  maximum(NU.Ord)([0, ...FN.pipe(lines, AR.map(stringWidth))]);
+  AR.maximum(NU.Ord)([0, ...FN.pipe(lines, AR.map(stringWidth))]);
 
 export const measureText: Unary<
   string[],

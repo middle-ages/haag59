@@ -1,0 +1,92 @@
+html {
+  --glyph-label-bg: #666;
+  --glyph-label-bg-active: #117;
+  --glyph-label-bg-hover: #449;
+
+  --glyph-bg: #1a1a1a;
+  --glyph-bg-active: #22f;
+  --glyph-bg-hover: #2a2a8a;
+
+  --glyph-ink: #fff;
+  --glyph-ink-active: #ccf;
+  --glyph-ink-hover: #99c;
+
+  --glyph-grid-fg: #40404060;
+
+  --label-bg: #444;
+  --border-bg: #333;
+  --page-bg: #000;
+  --diagram-bg: #555;
+  --diagram-sep: #333;
+}
+
+.hnd {
+  box-shadow: #75757590 1.2px 1.4px 2.4px 1.2px,
+    #757575b0 0.5px 0.6px 1.5px 0.5px;
+}
+
+.hnd:hover {
+  filter: contrast(140%);
+  box-shadow: #555555a0 1.2px 1.4px 2.4px 1.2px,
+    #757575c0 0.4px 0.5px 1.6px 0.4px;
+}
+
+.hnd:active {
+  box-shadow: #757575d0 0.4px 0.5px 1.4px 0.4px;
+  filter: contrast(150%);
+}
+
+.knb-o {
+  background: radial-gradient(
+    at top left,
+    #ccc 0%,
+    #bbb 10%,
+    #555 80%,
+    #222 100%
+  );
+}
+
+.rng {
+  background: conic-gradient(#222 0%, #666 20%, #aaa 35%, #666 85%, #222 100%);
+}
+
+.mon {
+  background: radial-gradient(at top left, #00d 0%, #007 60%, #003 100%);
+}
+
+.sun {
+  background: radial-gradient(at top left, #ccf 0%, #33d 80%, #004 100%);
+}
+
+.mon-i {
+  background: radial-gradient(at bottom right, #00e 0%, #007 60%, #004 100%);
+}
+
+.sun-i {
+  background: radial-gradient(at bottom right, #fe0 0%, #e90 70%, #c50 100%);
+}
+
+.mon-i > svg > path {
+  fill: #ffff77;
+}
+
+#ray-o > path {
+  fill: #ff9922;
+}
+
+#ray-y > path {
+  fill: #ffff00;
+}
+
+.bas {
+  background: linear-gradient(#222 0%, #333 20%, #666 80%, #999 100%);
+}
+
+.frm {
+  background: conic-gradient(#888 0%, #444 40%, #888 80%, #aaa 90%, #888 100%);
+}
+
+.tng {
+  background: linear-gradient(#22222290 0%, #444444d0 15%, #888 90%, #999 100%);
+  border: 1px solid #b0b0b0df;
+}

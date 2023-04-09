@@ -1,10 +1,6 @@
-import { endomorphism as END, function as FN, hkt as HKT } from 'fp-ts';
-import { function as FNs } from 'fp-ts-std';
+import { Lazy, FN, FunctionN, HKT, Unary, Endo } from './fp-ts.js';
 
 export type EndoOf<T> = <U extends T>(src: U) => U;
-export type Endo<T> = END.Endomorphism<T>;
-
-export type Unary<Q, R> = FN.FunctionN<[Q], R>;
 export type UnaryRest<Q, R> = (...args: Q[]) => R;
 export type PartialUnary<Q, R> = (q?: Q) => R;
 
@@ -22,20 +18,17 @@ export type PartialUnary<Q, R> = (q?: Q) => R;
  * ```
  */
 export type Unary1<F extends HKT.URIS, R> = <A>(fa: HKT.Kind<F, A>) => R;
-
-export type Binary<P, Q, R> = FN.FunctionN<[P, Q], R>;
+export type Binary<P, Q, R> = FunctionN<[P, Q], R>;
 export type BinaryC<P, Q, R> = Unary<P, Unary<Q, R>>;
 
 export type BinOp<P> = Binary<P, P, P>;
 export type BinOpC<P> = BinaryC<P, P, P>;
 export type BinOpT<P> = Unary<[P, P], P>;
 
-export type Ternary<S, P, Q, R> = FN.FunctionN<[S, P, Q], R>;
+export type Ternary<S, P, Q, R> = FunctionN<[S, P, Q], R>;
 export type TernaryC<S, P, Q, R> = Unary<S, Unary<P, Unary<Q, R>>>;
 
-export type Effect<T> = Unary<T, void>;
-
-export const apply0 = <T>(fn: FN.Lazy<T>): T => fn();
+export const apply0 = <T>(fn: Lazy<T>): T => fn();
 
 export const apply1: <A>(a: A) => <B>(fn: Unary<A, B>) => B = a => fn => fn(a);
 
@@ -61,7 +54,7 @@ export const callWith =
  * ```
  */
 export type uncurry2T = <A, B, C>(f: BinaryC<A, B, C>) => Binary<A, B, C>;
-export const uncurry2T: uncurry2T = FN.flow(FNs.uncurry2, FN.untupled);
+export const uncurry2T: uncurry2T = FN.flow(FN.uncurry2, FN.untupled);
 
 export type curry2F = <A, B, C>(f: Binary<A, B, C>) => BinaryC<B, A, C>;
 

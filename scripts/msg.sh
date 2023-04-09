@@ -10,8 +10,10 @@ declare -A msg
 declare -A indent
 
 msg[done]=$(color ok '✅ Done')
-msg[noarg]=$(color ko '❌ Missing argument'):
-msg[nodir]=$(color ko '❌ Missing path'):
+msg[noarg]=$(color ko '❌ ❓ Missing argument'):
+msg[nodir]=$(color ko '❌ 📂 Missing directory'):
+msg[unexpectedfile]=$(color ko '❌ 📑 Found file instead of directory'):
+msg[unexpecteddir]=$(color ko '❌ 📂 Found directory instead of file'):
 
 function indent_n {
   # shellcheck disable=SC2051,SC2086

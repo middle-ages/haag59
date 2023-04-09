@@ -1,16 +1,5 @@
-import {
-  function as FN,
-  hkt as HKT,
-  monoid as MO,
-  nonEmptyArray as NEA,
-  number as NU,
-  ord as OD,
-  readonlyArray as RA,
-} from 'fp-ts';
+import { Endo, FN, HKT, MO, NEA, NU, OD, RA, Unary } from './fp-ts.js';
 import { ObjectEntry, setPropOf, typedEntries } from './object.js';
-
-type Unary<A, B> = (a: A) => B;
-type Endo<A> = (a: A) => A;
 
 export type Extract<F extends HKT.URIS, B> = <A>(from: HKT.Kind<F, A>) => B;
 
@@ -22,8 +11,8 @@ export type Mapper<F extends HKT.URIS> = <A, B>(
   f: Unary<A, B>,
 ) => Unary<HKT.Kind<F, A>, HKT.Kind<F, B>>;
 
-type OrdStruct<T> = { [K in keyof T]: OD.Ord<T[K]> };
-type OrdEntry<T> = ObjectEntry<OrdStruct<T>>;
+export type OrdStruct<T> = { [K in keyof T]: OD.Ord<T[K]> };
+export type OrdEntry<T> = ObjectEntry<OrdStruct<T>>;
 
 /** Convert a struct of `Ord`s into an ord of struct */
 export const ordStruct = <T>(

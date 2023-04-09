@@ -33,8 +33,12 @@ set -Eeuo pipefail
 
 . config/workspace-model.sh
 
+export project project_name project_path runner project_git \
+config_shared tests test_unit_config_local package_config_local \
+tsconfig_local tsconfig_tests_local deps_local deps_tmp project_readme \
+api_extractor_local
+
 check_arg 'project name' "${1:- }"
-export project project_name project_path runner
 
 project="$(imp "$1")"
 project_name=$1
@@ -42,16 +46,13 @@ project_path=packages/$project_name
 
 runner="${runner_exe} -F $project_name" # project pnpm workspace runner
 
+project_git="$packages_git/$project_name"
+
 check_dir "$project_path" 'project directory'
-export config_shared tests
 
 tests="$project_path/tests";  # project tests dir
-check_dir "$tests" 'project tests directory'
+ensure_dir "$tests"
 
-export test_unit_config_local package_config_local
-export tsconfig_local tsconfig_tests_local
-export deps_local deps_tmp project_readme
-export api_extractor_local
 
 # 1. Unit test config
 test_unit_config_local="$tests/vitest.config.ts"

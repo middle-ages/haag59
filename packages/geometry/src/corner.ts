@@ -1,8 +1,4 @@
-import { function as FN, readonlyArray as RA, show as SH } from 'fp-ts';
-import { tuple as TUs } from 'fp-ts-std';
-import { Unary, Tuple4 } from 'commons';
-
-const { dup } = TUs;
+import { Unary, Tuple4, FN, RA, SH, TU } from 'commons';
 
 /** 4-tuple of all corner names */
 export const allCorners = [
@@ -21,26 +17,30 @@ export type Cornered<T> = Record<Corner, T>;
 /** 4-tuple of corner positions on a rectangle */
 export type Corners = Cornered<string>;
 
-export const sym: Corners = {
+const sym: Corners = {
   topLeft: '↖',
   topRight: '↗',
   bottomLeft: '↙',
   bottomRight: '↘',
 };
 
-export const value = FN.pipe(allCorners, RA.map(dup), Object.fromEntries) as {
+export const values = FN.pipe(
+  allCorners,
+  RA.map(TU.dup),
+  Object.fromEntries,
+) as {
   [K in Corner]: K;
 };
 
 /** `string` to corner type guard */
-export const checkCorner = (d: string): d is Corner => d in sym;
+export const check = (d: string): d is Corner => d in sym;
 
 /** Map over all corners to make a 4-tuple */
-export const mapCorners = <R>(f: Unary<Corner, R>) =>
+export const map = <R>(f: Unary<Corner, R>) =>
   FN.pipe(allCorners, RA.map(f)) as Tuple4<R>;
 
 /** Zip a 4-tuple with the corners */
-export const zipCorners = <R>(r: Tuple4<R>) =>
+export const zip = <R>(r: Tuple4<R>) =>
   FN.pipe(allCorners, RA.zip(r)) as Tuple4<[Corner, R]>;
 
 /**
@@ -60,9 +60,9 @@ export const fromTuple = <T>([
 });
 
 /** Create a `Cornered<T>` of a single value */
-export const cornerSingleton = <T>(t: T): Cornered<T> =>
-  fromTuple([t, t, t, t]);
+export const singleton = <T>(t: T): Cornered<T> => fromTuple([t, t, t, t]);
 
+/** `Corner` `Show` instance */
 export const show: SH.Show<Corner> = { show: corner => sym[corner] };
 
 /** Convert a string of 4 border characters to a `Corners` */

@@ -15,19 +15,19 @@ import { Matrix } from '../data.js';
  * it:
  *
  * 1. The character itself
- * 2. The list of its `BitmapRole`s, for example “┣” is from the bitmap role
+ * 1. The owning list of `BitmapRole`, for example “┣” is from the bitmap role
  * `vTee`.
- * 3. The glyph bitmap matrix: useful for stacking with other characters or
- * investigating the bitmap itself using the functions in `bitmap/ops`,
- * such as `bitmap.invertEq` to check if a matrix pair are invert symmetric,
- * `bitmap.countPx` to count pixels `ON` in some row given by index,
+ * 1. The glyph bitmap matrix: useful for stacking with other characters or
+ * investigating the bitmap itself using the functions in `bitmap/ops`, such as
+ * `bitmap.invertEq` to check if a matrix pair are invert symmetric,
+ * `bitmap.countPx` to count pixels the lit pixels in some row given by index,
  * and many others.
- * 4. Relations to other glyphs: a `CharRelations` object encodes relations to
- * other glyphs we have registered, keyed by the relation criteria, I.e.
+ * 1. Relations to other glyphs: a `CharRelations` object encodes relations to
+ * other glyphs we have registered, keyed by the relation criteria, I.e.  *
  * `weight`, `turn`, `invert`, etc. This allows navigation between the glyphs by
  * relation.
+ *
  */
-
 export interface Glyph {
   _tag: 'glyph';
   char: string;

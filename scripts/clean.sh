@@ -2,6 +2,8 @@
 
 set -Eeuo pipefail
 
+echo '🧹 Cleaning project'
+
 rm -rf esm
 rm -f /*-*.*.*.tgz
 

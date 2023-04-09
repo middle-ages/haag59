@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "Inter var";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url("Inter-roman.var.woff2") format("woff2");
+}
+
+html * {
+  transition: all 0.25s ease-in-out;
+  box-sizing: border-box;
+  font-family: "Inter var";
+}
+
+body {
+  background: var(--page-bg);
+  margin: 0;
+  padding: 0;
+}
+
+clipPath > * {
+  clip-rule: evenodd;
+}
+
+/** cc - Center Children */
+.cc {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+}
+
+/** sqr - SQuaRe, required var(--w) */
+.sqr {
+  width: var(--w);
+  height: var(--w);
+}
+
+/** sqp - SQuare Positioned, required var(--w2) */
+.sqp {
+  position: absolute;
+  top: var(--w2);
+  left: var(--w2);
+}
+
+/** rnd - RouND with radius of var(--w) / 2 */
+.rnd {
+  border-radius: 50%;
+}
+
+/** zs - Zero Sized */
+.zs {
+  width: 0;
+  height: 0;
+}
+
+/** sra = sqr + rnd + abs */
+.sra {
+  position: absolute;
+  width: var(--w);
+  height: var(--w);
+  border-radius: 50%;
+}
+
+/** srp = sra + sqp */
+.srp {
+  position: absolute;
+  width: var(--w);
+  height: var(--w);
+  top: var(--w2);
+  left: var(--w2);
+  border-radius: 50%;
+}

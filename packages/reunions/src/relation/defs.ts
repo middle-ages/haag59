@@ -3,10 +3,14 @@ import { hFlipEq, turnEq, invertEq, vFlipEq } from '../ops.js';
 import { dash, matrixCriteria, weight, shift } from '../criteria.js';
 
 export const relationDefs = {
-  turn: {
-    label: 'Clockwise turn 90ᵒ',
-    note: '∀ g⯈* ∈ turn : turn(turn(g))=g' + ' ∨ turn(turn(turn(turn(g))))=g',
-    criteria: matrixCriteria(turnEq),
+  dash: {
+    label: 'Increase in dashing level',
+    criteria: dash,
+  },
+
+  hFlip: {
+    label: 'Flip on vertical axis',
+    criteria: matrixCriteria(hFlipEq),
   },
 
   invert: {
@@ -15,14 +19,15 @@ export const relationDefs = {
     criteria: matrixCriteria(invertEq),
   },
 
-  hFlip: {
-    label: 'Flip on vertical axis',
-    criteria: matrixCriteria(hFlipEq),
+  shift: {
+    label: 'Glyph translates top→down/left→right',
+    criteria: shift,
   },
 
-  vFlip: {
-    label: 'Flip on horizontal axis',
-    criteria: matrixCriteria(vFlipEq),
+  turn: {
+    label: 'Clockwise turn 90ᵒ',
+    note: '∀ g⯈* ∈ turn : turn(turn(g))=g' + ' ∨ turn(turn(turn(turn(g))))=g',
+    criteria: matrixCriteria(turnEq),
   },
 
   weight: {
@@ -30,14 +35,9 @@ export const relationDefs = {
     criteria: weight,
   },
 
-  shift: {
-    label: 'Glyph translates top→down/left→right',
-    criteria: shift,
-  },
-
-  dash: {
-    label: 'Increase in dashing level',
-    criteria: dash,
+  vFlip: {
+    label: 'Flip on horizontal axis',
+    criteria: matrixCriteria(vFlipEq),
   },
 } as const;
 

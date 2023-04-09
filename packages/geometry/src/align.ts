@@ -68,7 +68,7 @@ export interface Align {
   vertical: VAlign;
 }
 
-export const build: Binary<HAlign, VAlign, Align> = (horizontal, vertical) => ({
+export const align: Binary<HAlign, VAlign, Align> = (horizontal, vertical) => ({
   horizontal,
   vertical,
 });
@@ -113,7 +113,7 @@ export const hAlignSym: Record<HAlign, string> = {
 /** Map over all horizontal alignments to make a 3-tuple */
 export const mapHAlign = <R>(f: Unary<HAlign, R>) =>
   FN.pipe(hAlign, RA.map(f)) as Tuple3<R>;
-/** Map over all vertical alignments to make a 3-tuple  */
+/** Map over all vertical alignments to make a 3-tuple */
 export const mapVAlign = <R>(f: Unary<VAlign, R>) =>
   FN.pipe(vAlign, RA.map(f)) as Tuple3<R>;
 
@@ -195,7 +195,7 @@ export const fromBuildArgs =
       vertical === undefined ? FN.identity : alignV.set(vertical),
     );
 
-export const show: SH.Show<Align> = {
+export const showAlign: SH.Show<Align> = {
   show: ({ horizontal, vertical }) => alignSym[vertical][horizontal],
 };
 

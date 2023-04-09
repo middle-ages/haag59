@@ -37,7 +37,7 @@ module.exports = {
         printWidth: 80,
         arrowParens: 'avoid',
         endOfLine: 'auto',
-        overrides: [{ files: ['*.html', '*.css'] }],
+        overrides: [{ files: ['*.html', '*.js', '*.css'] }],
       },
     ],
   },

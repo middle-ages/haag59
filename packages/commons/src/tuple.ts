@@ -1,6 +1,5 @@
 import { N } from 'ts-toolbelt';
-import { function as FN } from 'fp-ts';
-import { Unary } from './function.js';
+import { FN, Unary } from './fp-ts.js';
 
 export type Pair<T> = [T, T];
 export type Tuple3<T> = [T, T, T];
@@ -9,28 +8,32 @@ export type TupleN<T, Len extends number> = readonly [T, ...T[]] & {
   length: Len;
 };
 
-type AnyTuple = readonly any[];
+export type AnyTuple = readonly any[];
 
-/** Reverse a tuple type
+/**
+ * Reverse a tuple type
  *
- *  Given these tuple types:
- *  ```
- *  type EmptyTuple = readonly [];
- *  type OneType    = readonly [number];
- *  type ThreeTypes = readonly [number, string, RegExp];
- *  ```
- *  We can reverse their order:
- *  ```
- *  type EmptyTupleReversed = Reverse<EmptyTuple>;
- *  type OneTypeReversed    = Reverse<OneType>;
- *  type ThreeTypesReversed = Reverse<ThreeTypes>;
- *  ```
- *  To get new tuple types:
- *  ```
- *  EmptyTupleReversed ≡ readonly []
- *  OneTypeReversed    ≡ readonly [number]
- *  ThreeTypesReversed ≡ readonly [RegExp, string, number]
- *  ```
+ * Given these tuple types:
+ * ```ts
+ * type EmptyTuple = readonly [];
+ * type OneType    = readonly [number];
+ * type ThreeTypes = readonly [number, string, RegExp];
+ * ```
+ *
+ * We can reverse their order:
+ * ```ts
+ * type EmptyTupleReversed = Reverse<EmptyTuple>;
+ * type OneTypeReversed    = Reverse<OneType>;
+ * type ThreeTypesReversed = Reverse<ThreeTypes>;
+ * ```
+ *
+ * To get new tuple types:
+ * ```ts
+ * type EmptyTupleReversed = readonly [];
+ * type OneTypeReversed    = readonly [number];
+ * type ThreeTypesReversed = readonly [RegExp, string, number];
+ * ```
+ *
  */
 export type Reverse<T extends AnyTuple> = T['length'] extends 0
   ? []

@@ -1,16 +1,5 @@
-import {
-  function as FN,
-  monoid as MO,
-  number as NU,
-  ord as OD,
-  predicate as PRE,
-} from 'fp-ts';
-import { function as FNs, tuple as TUs } from 'fp-ts-std';
+import { Endo, FN, MO, NU, OD, PRE, TU, Unary } from './fp-ts.js';
 import { Pair } from './tuple.js';
-import { Unary, Endo } from './function.js';
-
-const { mapBoth } = TUs;
-const { fork } = FNs;
 
 export const max: Unary<number[], number> = FN.pipe(
     NU.Bounded,
@@ -29,8 +18,8 @@ export const halfInt: Unary<number, Pair<number>> = n => {
 
 export const [geq, leq]: Pair<PRE.Predicate<Pair<number>>> = FN.pipe(
   NU.Ord,
-  fork([OD.geq, OD.leq]),
-  mapBoth(FN.tupled),
+  FN.fork([OD.geq, OD.leq]),
+  TU.mapBoth(FN.tupled),
 );
 
 export const floorMod: Endo<Pair<number>> = ([numerator, divisor]) => [

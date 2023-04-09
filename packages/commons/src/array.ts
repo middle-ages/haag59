@@ -1,23 +1,8 @@
-import {
-  array as AR,
-  function as FN,
-  nonEmptyArray as NEA,
-  option as OP,
-  readonlyArray as RA,
-  readonlyNonEmptyArray as NE,
-  readonlyRecord as REC,
-  tuple as TU,
-} from 'fp-ts';
-import { function as FNs, tuple as TUs } from 'fp-ts-std';
+import { AR, FN, NEA, OP, RA, RC, TU, Unary, Endo } from './fp-ts.js';
 import { typedFromEntries } from './object.js';
 import { Pair, Tuple3 } from './tuple.js';
 
 const { flow, pipe, tupled, untupled } = FN;
-const { fork } = FNs;
-const { dup, mapBoth, withSnd } = TUs;
-
-type Unary<A, B> = (a: A) => B;
-type Endo<A> = (a: A) => A;
 
 export const last = <T>(arr: T[]) => arr.at(-1) as T,
   init = <T>(arr: T[]): T[] => arr.slice(0, arr.length - 1),
@@ -77,7 +62,7 @@ export const repeatSubgrid =
 
     const [widthN, heightN] = pipe(
         [width / fromWidth, height / fromHeight],
-        mapBoth(Math.floor),
+        TU.mapBoth(Math.floor),
       ),
       [widthRem, heightRem] = [
         width - widthN * fromWidth,
@@ -150,7 +135,7 @@ export const chunk4x = <T>(rows: T[][]): Pair<Pair<OP.Option<T>>>[][] => {
     AR.map(
       flow(
         chunksOf(2),
-        AR.map(p => (p.length === 2 ? p : [head(p), dup(OP.none)])),
+        AR.map(p => (p.length === 2 ? p : [head(p), TU.dup(OP.none)])),
       ),
     ),
   ) as Pair<Pair<OP.Option<T>>>[][];
@@ -159,11 +144,11 @@ export const chunk4x = <T>(rows: T[][]): Pair<Pair<OP.Option<T>>>[][] => {
 export const mapRange =
   <R>(f: Unary<number, R>): Unary<Pair<number>, R[]> =>
   range =>
-    pipe([...NE.range(...range)], AR.map(f));
+    pipe([...NEA.range(...range)], AR.map(f));
 
-type Entry<T> = [target: T, prevNext: Pair<T[]>];
+export type AdjEntry<T> = [target: T, prevNext: Pair<T[]>];
 
-export const withAdjacent = <T>(chain: T[]): Entry<T>[] => {
+export const withAdjacent = <T>(chain: T[]): AdjEntry<T>[] => {
   if (chain.length === 2)
     return [
       [head(chain), [[], [last(chain)]]],
@@ -182,7 +167,7 @@ export const withAdjacent = <T>(chain: T[]): Entry<T>[] => {
    */
   const [before, at, after]: Tuple3<T[]> = pipe(
     chain,
-    fork([flow(init, init), flow(init, tail), flow(tail, tail)]),
+    FN.fork([flow(init, init), flow(init, tail), flow(tail, tail)]),
   );
 
   return [
@@ -192,7 +177,7 @@ export const withAdjacent = <T>(chain: T[]): Entry<T>[] => {
       before,
       AR.zip(after),
       AR.zip(at),
-      AR.map<[Pair<T>, T], Entry<T>>(([[prev, next], at]) => [
+      AR.map<[Pair<T>, T], AdjEntry<T>>(([[prev, next], at]) => [
         at,
         [[prev], [next]],
       ]),
@@ -203,7 +188,7 @@ export const withAdjacent = <T>(chain: T[]): Entry<T>[] => {
 };
 
 export const toTrueRecord = <K extends string>(ks: readonly K[]) =>
-  pipe(ks, RA.map(withSnd(true)), typedFromEntries);
+  pipe(ks, RA.map(TU.withSnd(true)), typedFromEntries);
 
 /** Index a list and returns a function for testing membership  */
 export const membershipTest = <A extends string>(xs: readonly A[]) => {
@@ -213,7 +198,7 @@ export const membershipTest = <A extends string>(xs: readonly A[]) => {
 
 /** Index a list and return a record from value to index */
 export const indexRecord = <A extends string>(xs: readonly A[]) =>
-  pipe(xs, RA.mapWithIndex(untupled(TU.swap)), REC.fromEntries) as Record<
+  RC.fromEntries([...pipe(xs, RA.mapWithIndex(untupled(TU.swap)))]) as Record<
     A,
     number
   >;
@@ -235,11 +220,12 @@ export const mapWithIndex2 = <A, B>(f: Mapper2D<A, B>): Unary<A[][], B[][]> =>
     ),
   );
 
-type Ne<T> = NEA.NonEmptyArray<T>;
-
 export const neMapWithIndex2 = <A, B>(
   f: Mapper2D<A, B>,
-): Unary<Ne<Ne<A>>, Ne<Ne<B>>> =>
+): Unary<
+  NEA.NonEmptyArray<NEA.NonEmptyArray<A>>,
+  NEA.NonEmptyArray<NEA.NonEmptyArray<B>>
+> =>
   NEA.mapWithIndex((rowIdx, row) =>
     pipe(
       row,

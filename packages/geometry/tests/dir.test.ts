@@ -1,5 +1,5 @@
 import { function as FN } from 'fp-ts';
-import { dir } from '../index.js';
+import * as dir from '../index.js';
 import { tuple as TUs } from 'fp-ts-std';
 
 const { mapBoth } = TUs;

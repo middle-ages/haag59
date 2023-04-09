@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <title>Named Border Sets</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="css/root.css" />
+    <link rel="stylesheet" href="css/diagram.css" />
+    <link rel="stylesheet" href="css/light.css" />
+    <link rel="stylesheet" href="css/dark.css" />
+  </head>
+  <style>
+    :root {
+      --glyph-scale: 5;
+      --glyph-base-gap: calc(var(--glyph-base-size) / 8);
+      --glyph-gap: calc(var(--glyph-scale) * var(--glyph-base-gap));
+      --border-base-size: calc(3 * var(--glyph-base-size) + 4 * var(--glyph-base-gap));
+      --border-size: calc(var(--glyph-scale) * var(--border-base-size));
+      --border-height: calc(var(--border-size) + var(--diagram-line-height));
+      --border-inner-size: calc(var(--border-size) - 2 * var(--border-gap));
+    }
+    main {
+      grid-template-columns: repeat(auto-fit, var(--border-size));
+    }
+    .border, .border-label, .border-body {
+      width: var(--border-size);
+    }
+    .border {
+      height: var(--border-height);
+    }
+    .border, .border-body, .border-row {
+      display: flex;
+    }
+    .border, .border-body {
+      flex-direction: column;
+    }
+    .border-label, g[id^="U"] {
+      cursor: pointer;
+      user-select: none;
+    }
+    .border-label {
+      height: var(--diagram-line-height);
+      line-height: var(--diagram-line-height);
+      font-size: var(--diagram-font-size);
+      color: var(--glyph-ink);
+      background: var(--label-bg);
+      text-align: center;
+    }
+    .border-label:active {
+      color: var(--glyph-ink-active) !important;
+      background: var(--glyph-label-bg-active) !important;
+    }
+    .border-label:hover {
+      color: var(--glyph-ink-hover);
+      background: var(--glyph-label-bg-hover);
+    }
+    .border-body,
+    .border-row {
+      gap: var(--glyph-gap);
+    }
+    .border-row, .border-row > svg {
+      height: var(--glyph-size);
+    }
+    .border-row {
+      width: var(--border-inner-size);
+    }
+    .border-body {
+      background: var(--border-bg);
+      height: var(--border-size);
+      padding: var(--glyph-gap);
+    }
+    .border-row > svg {
+      width: var(--glyph-size);
+    }
+    g[id^="U"] {
+      transform-origin: 0 0;
+      transform: scale(var(--glyph-scale));
+    }
+    .border-row:nth-child(2) > svg:nth-child(2) {
+      background: var(--border-bg);
+    }
+    svg:active > use {
+      --glyph-ink: var(--glyph-ink-active) !important;
+      --glyph-bg: var(--glyph-bg-active) !important;
+    }
+    svg:hover > use {
+      --glyph-ink: var(--glyph-ink-hover);
+      --glyph-bg: var(--glyph-bg-hover);
+    }
+  </style>
+  <body>
+    
+    <footer>
+      <aside>📋 Click border name or glyph</aside>
+      <div></div>
+      <div class="tgl">
+        <div class="top sqp">
+          <div class="bas sqp">
+            <div class="sun sra">
+              <svg viewBox="1.5 0.5 23 23">
+                <use href="#ray-o" />
+                <use href="#ray-y" class="ray-trn" />
+              </svg>
+              <div class="sun-i srp"></div>
+            </div>
+            <div class="mon sra">
+              <div class="mon-i srp">
+                <svg viewBox="0 0 16 16"><path /></svg>
+              </div>
+            </div>
+            <div class="tng tng-l"></div>
+          </div>
+          <div class="frm sqp"></div>
+          <div class="hnd sra knb-l" tabindex="0" onclick="knbClick()" onkeydown="knbClick()" title="Click to toggle dark mode" >
+            <div class="knb sra">
+              <div class="knb-o sra"></div>
+              <div class="rng srp"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div></div>
+    <div></div>
+
+    <div class="diagram">
+      <main>
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“beveled” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “beveled”';help.classList.remove('shake');navigator.clipboard.writeText('╱▔▔▔▔▔▔▔╲\n▏beveled▕\n╲▁▁▁▁▁▁▁╱').then(() => help.classList.add('shake'))">beveled</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2571"/></svg><svg><use href="#U2594"/></svg><svg><use href="#U2572"/></svg></div>
+            <div class="border-row"><svg><use href="#U258F"/></svg><svg>                    </svg><svg><use href="#U2595"/></svg></div>
+            <div class="border-row"><svg><use href="#U2572"/></svg><svg><use href="#U2581"/></svg><svg><use href="#U2571"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“dashed” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “dashed”';help.classList.remove('shake');navigator.clipboard.writeText('┌┄┄┄┄┄┄┐\n┆dashed┆\n└┄┄┄┄┄┄┘').then(() => help.classList.add('shake'))">dashed</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250C"/></svg><svg><use href="#U2504"/></svg><svg><use href="#U2510"/></svg></div>
+            <div class="border-row"><svg><use href="#U2506"/></svg><svg>                    </svg><svg><use href="#U2506"/></svg></div>
+            <div class="border-row"><svg><use href="#U2514"/></svg><svg><use href="#U2504"/></svg><svg><use href="#U2518"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“dotted” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “dotted”';help.classList.remove('shake');navigator.clipboard.writeText('┌┈┈┈┈┈┈┐\n┊dotted┊\n└┈┈┈┈┈┈┘').then(() => help.classList.add('shake'))">dotted</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250C"/></svg><svg><use href="#U2508"/></svg><svg><use href="#U2510"/></svg></div>
+            <div class="border-row"><svg><use href="#U250A"/></svg><svg>                    </svg><svg><use href="#U250A"/></svg></div>
+            <div class="border-row"><svg><use href="#U2514"/></svg><svg><use href="#U2508"/></svg><svg><use href="#U2518"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“double” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “double”';help.classList.remove('shake');navigator.clipboard.writeText('╔══════╗\n║double║\n╚══════╝').then(() => help.classList.add('shake'))">double</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2554"/></svg><svg><use href="#U2550"/></svg><svg><use href="#U2557"/></svg></div>
+            <div class="border-row"><svg><use href="#U2551"/></svg><svg>                    </svg><svg><use href="#U2551"/></svg></div>
+            <div class="border-row"><svg><use href="#U255A"/></svg><svg><use href="#U2550"/></svg><svg><use href="#U255D"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“halfSolid” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “halfSolid”';help.classList.remove('shake');navigator.clipboard.writeText('▞▀▀▀▀▀▀▀▀▀▚\n▌halfSolid▐\n▚▄▄▄▄▄▄▄▄▄▞').then(() => help.classList.add('shake'))">halfSolid</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U259E"/></svg><svg><use href="#U2580"/></svg><svg><use href="#U259A"/></svg></div>
+            <div class="border-row"><svg><use href="#U258C"/></svg><svg>                    </svg><svg><use href="#U2590"/></svg></div>
+            <div class="border-row"><svg><use href="#U259A"/></svg><svg><use href="#U2584"/></svg><svg><use href="#U259E"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“halfSolidFar” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “halfSolidFar”';help.classList.remove('shake');navigator.clipboard.writeText('▛▀▀▀▀▀▀▀▀▀▀▀▀▜\n▌halfSolidFar▐\n▙▄▄▄▄▄▄▄▄▄▄▄▄▟').then(() => help.classList.add('shake'))">halfSolidFar</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U259B"/></svg><svg><use href="#U2580"/></svg><svg><use href="#U259C"/></svg></div>
+            <div class="border-row"><svg><use href="#U258C"/></svg><svg>                    </svg><svg><use href="#U2590"/></svg></div>
+            <div class="border-row"><svg><use href="#U2599"/></svg><svg><use href="#U2584"/></svg><svg><use href="#U259F"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“halfSolidNear” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “halfSolidNear”';help.classList.remove('shake');navigator.clipboard.writeText('▗▄▄▄▄▄▄▄▄▄▄▄▄▄▖\n▐halfSolidNear▌\n▝▀▀▀▀▀▀▀▀▀▀▀▀▀▘').then(() => help.classList.add('shake'))">halfSolidNear</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2597"/></svg><svg><use href="#U2584"/></svg><svg><use href="#U2596"/></svg></div>
+            <div class="border-row"><svg><use href="#U2590"/></svg><svg>                    </svg><svg><use href="#U258C"/></svg></div>
+            <div class="border-row"><svg><use href="#U259D"/></svg><svg><use href="#U2580"/></svg><svg><use href="#U2598"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“hDouble” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “hDouble”';help.classList.remove('shake');navigator.clipboard.writeText('╒═══════╕\n│hDouble│\n╘═══════╛').then(() => help.classList.add('shake'))">hDouble</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2552"/></svg><svg><use href="#U2550"/></svg><svg><use href="#U2555"/></svg></div>
+            <div class="border-row"><svg><use href="#U2502"/></svg><svg>                    </svg><svg><use href="#U2502"/></svg></div>
+            <div class="border-row"><svg><use href="#U2558"/></svg><svg><use href="#U2550"/></svg><svg><use href="#U255B"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title=">📋 Click to copy the&#13;“hHalfSolid” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “hHalfSolid”';help.classList.remove('shake');navigator.clipboard.writeText('▄▄▄▄▄▄▄▄▄▄▄▄\n▌hHalfSolid▐\n▀▀▀▀▀▀▀▀▀▀▀▀').then(() => help.classList.add('shake'))">hHalfSolid</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2584"/></svg><svg><use href="#U2584"/></svg><svg><use href="#U2584"/></svg></div>
+            <div class="border-row"><svg><use href="#U258C"/></svg><svg>                    </svg><svg><use href="#U2590"/></svg></div>
+            <div class="border-row"><svg><use href="#U2580"/></svg><svg><use href="#U2580"/></svg><svg><use href="#U2580"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“hMcGugan” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “hMcGugan”';help.classList.remove('shake');navigator.clipboard.writeText('▁▁▁▁▁▁▁▁▁▁\n▏hMcGugan▕\n▔▔▔▔▔▔▔▔▔▔').then(() => help.classList.add('shake'))">hMcGugan</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2581"/></svg><svg><use href="#U2581"/></svg><svg><use href="#U2581"/></svg></div>
+            <div class="border-row"><svg><use href="#U258F"/></svg><svg>                    </svg><svg><use href="#U2595"/></svg></div>
+            <div class="border-row"><svg><use href="#U2594"/></svg><svg><use href="#U2594"/></svg><svg><use href="#U2594"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“hThick” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “hThick”';help.classList.remove('shake');navigator.clipboard.writeText('┍━━━━━━┑\n│hThick│\n┕━━━━━━┙').then(() => help.classList.add('shake'))">hThick</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250D"/></svg><svg><use href="#U2501"/></svg><svg><use href="#U2511"/></svg></div>
+            <div class="border-row"><svg><use href="#U2502"/></svg><svg>                    </svg><svg><use href="#U2502"/></svg></div>
+            <div class="border-row"><svg><use href="#U2515"/></svg><svg><use href="#U2501"/></svg><svg><use href="#U2519"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“line” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “line”';help.classList.remove('shake');navigator.clipboard.writeText('┌────┐\n│line│\n└────┘').then(() => help.classList.add('shake'))">line</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250C"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U2510"/></svg></div>
+            <div class="border-row"><svg><use href="#U2502"/></svg><svg>                    </svg><svg><use href="#U2502"/></svg></div>
+            <div class="border-row"><svg><use href="#U2514"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U2518"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“near” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “near”';help.classList.remove('shake');navigator.clipboard.writeText(' ▁▁▁▁ \n▕near▏\n ▔▔▔▔ ').then(() => help.classList.add('shake'))">near</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U0020"/></svg><svg><use href="#U2581"/></svg><svg><use href="#U0020"/></svg></div>
+            <div class="border-row"><svg><use href="#U2595"/></svg><svg>                    </svg><svg><use href="#U258F"/></svg></div>
+            <div class="border-row"><svg><use href="#U0020"/></svg><svg><use href="#U2594"/></svg><svg><use href="#U0020"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“round” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “round”';help.classList.remove('shake');navigator.clipboard.writeText('╭─────╮\n│round│\n╰─────╯').then(() => help.classList.add('shake'))">round</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U256D"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U256E"/></svg></div>
+            <div class="border-row"><svg><use href="#U2502"/></svg><svg>                    </svg><svg><use href="#U2502"/></svg></div>
+            <div class="border-row"><svg><use href="#U2570"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U256F"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“roundDashed” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “roundDashed”';help.classList.remove('shake');navigator.clipboard.writeText('╭┄┄┄┄┄┄┄┄┄┄┄╮\n┆roundDashed┆\n╰┄┄┄┄┄┄┄┄┄┄┄╯').then(() => help.classList.add('shake'))">roundDashed</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U256D"/></svg><svg><use href="#U2504"/></svg><svg><use href="#U256E"/></svg></div>
+            <div class="border-row"><svg><use href="#U2506"/></svg><svg>                    </svg><svg><use href="#U2506"/></svg></div>
+            <div class="border-row"><svg><use href="#U2570"/></svg><svg><use href="#U2504"/></svg><svg><use href="#U256F"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“roundDotted” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “roundDotted”';help.classList.remove('shake');navigator.clipboard.writeText('╭┈┈┈┈┈┈┈┈┈┈┈╮\n┊roundDotted┊\n╰┈┈┈┈┈┈┈┈┈┈┈╯').then(() => help.classList.add('shake'))">roundDotted</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U256D"/></svg><svg><use href="#U2508"/></svg><svg><use href="#U256E"/></svg></div>
+            <div class="border-row"><svg><use href="#U250A"/></svg><svg>                    </svg><svg><use href="#U250A"/></svg></div>
+            <div class="border-row"><svg><use href="#U2570"/></svg><svg><use href="#U2508"/></svg><svg><use href="#U256F"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“roundWide” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “roundWide”';help.classList.remove('shake');navigator.clipboard.writeText('╭╌╌╌╌╌╌╌╌╌╮\n╎roundWide╎\n╰╌╌╌╌╌╌╌╌╌╯').then(() => help.classList.add('shake'))">roundWide</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U256D"/></svg><svg><use href="#U254C"/></svg><svg><use href="#U256E"/></svg></div>
+            <div class="border-row"><svg><use href="#U254E"/></svg><svg>                    </svg><svg><use href="#U254E"/></svg></div>
+            <div class="border-row"><svg><use href="#U2570"/></svg><svg><use href="#U254C"/></svg><svg><use href="#U256F"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“solid” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “solid”';help.classList.remove('shake');navigator.clipboard.writeText('███████\n█solid█\n███████').then(() => help.classList.add('shake'))">solid</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2588"/></svg><svg><use href="#U2588"/></svg><svg><use href="#U2588"/></svg></div>
+            <div class="border-row"><svg><use href="#U2588"/></svg><svg>                    </svg><svg><use href="#U2588"/></svg></div>
+            <div class="border-row"><svg><use href="#U2588"/></svg><svg><use href="#U2588"/></svg><svg><use href="#U2588"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“space” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “space”';help.classList.remove('shake');navigator.clipboard.writeText('       \n space \n       ').then(() => help.classList.add('shake'))">space</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U0020"/></svg><svg><use href="#U0020"/></svg><svg><use href="#U0020"/></svg></div>
+            <div class="border-row"><svg><use href="#U0020"/></svg><svg>                    </svg><svg><use href="#U0020"/></svg></div>
+            <div class="border-row"><svg><use href="#U0020"/></svg><svg><use href="#U0020"/></svg><svg><use href="#U0020"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“thick” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “thick”';help.classList.remove('shake');navigator.clipboard.writeText('┏━━━━━┓\n┃thick┃\n┗━━━━━┛').then(() => help.classList.add('shake'))">thick</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250F"/></svg><svg><use href="#U2501"/></svg><svg><use href="#U2513"/></svg></div>
+            <div class="border-row"><svg><use href="#U2503"/></svg><svg>                    </svg><svg><use href="#U2503"/></svg></div>
+            <div class="border-row"><svg><use href="#U2517"/></svg><svg><use href="#U2501"/></svg><svg><use href="#U251B"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“thickDashed” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “thickDashed”';help.classList.remove('shake');navigator.clipboard.writeText('┏┅┅┅┅┅┅┅┅┅┅┅┓\n┇thickDashed┇\n┗┅┅┅┅┅┅┅┅┅┅┅┛').then(() => help.classList.add('shake'))">thickDashed</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250F"/></svg><svg><use href="#U2505"/></svg><svg><use href="#U2513"/></svg></div>
+            <div class="border-row"><svg><use href="#U2507"/></svg><svg>                    </svg><svg><use href="#U2507"/></svg></div>
+            <div class="border-row"><svg><use href="#U2517"/></svg><svg><use href="#U2505"/></svg><svg><use href="#U251B"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“thickWide” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “thickWide”';help.classList.remove('shake');navigator.clipboard.writeText('┏╍╍╍╍╍╍╍╍╍╍╍┓\n╏ thickWide ╏\n┗╍╍╍╍╍╍╍╍╍╍╍┛').then(() => help.classList.add('shake'))">thickWide</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250F"/></svg><svg><use href="#U254D"/></svg><svg><use href="#U2513"/></svg></div>
+            <div class="border-row"><svg><use href="#U254F"/></svg><svg>                    </svg><svg><use href="#U254F"/></svg></div>
+            <div class="border-row"><svg><use href="#U2517"/></svg><svg><use href="#U254D"/></svg><svg><use href="#U251B"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“thickDotted” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “thickDotted”';help.classList.remove('shake');navigator.clipboard.writeText('┏┉┉┉┉┉┉┉┉┉┉┉┓\n┋thickDotted┋\n┗┉┉┉┉┉┉┉┉┉┉┉┛').then(() => help.classList.add('shake'))">thickDotted</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250F"/></svg><svg><use href="#U2509"/></svg><svg><use href="#U2513"/></svg></div>
+            <div class="border-row"><svg><use href="#U250B"/></svg><svg>                    </svg><svg><use href="#U250B"/></svg></div>
+            <div class="border-row"><svg><use href="#U2517"/></svg><svg><use href="#U2509"/></svg><svg><use href="#U251B"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“vDouble” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “vDouble”';help.classList.remove('shake');navigator.clipboard.writeText('╓───────╖\n║vDouble║\n╙───────╜').then(() => help.classList.add('shake'))">vDouble</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2553"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U2556"/></svg></div>
+            <div class="border-row"><svg><use href="#U2551"/></svg><svg>                    </svg><svg><use href="#U2551"/></svg></div>
+            <div class="border-row"><svg><use href="#U2559"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U255C"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“vHalfSolid” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “vHalfSolid”';help.classList.remove('shake');navigator.clipboard.writeText('▐▀▀▀▀▀▀▀▀▀▀▌\n▐vHalfSolid▌\n▐▄▄▄▄▄▄▄▄▄▄▌').then(() => help.classList.add('shake'))">vHalfSolid</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2590"/></svg><svg><use href="#U2580"/></svg><svg><use href="#U258C"/></svg></div>
+            <div class="border-row"><svg><use href="#U2590"/></svg><svg>                    </svg><svg><use href="#U258C"/></svg></div>
+            <div class="border-row"><svg><use href="#U2590"/></svg><svg><use href="#U2584"/></svg><svg><use href="#U258C"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“vMcGugan” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “vMcGugan”';help.classList.remove('shake');navigator.clipboard.writeText('▕▔▔▔▔▔▔▔▔▏\n▕vMcGugan▏\n▕▁▁▁▁▁▁▁▁▏').then(() => help.classList.add('shake'))">vMcGugan</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U2595"/></svg><svg><use href="#U2594"/></svg><svg><use href="#U258F"/></svg></div>
+            <div class="border-row"><svg><use href="#U2595"/></svg><svg>                    </svg><svg><use href="#U258F"/></svg></div>
+            <div class="border-row"><svg><use href="#U2595"/></svg><svg><use href="#U2581"/></svg><svg><use href="#U258F"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“vThick” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “vThick”';help.classList.remove('shake');navigator.clipboard.writeText('┎──────┒\n┃vThick┃\n┖──────┚').then(() => help.classList.add('shake'))">vThick</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250E"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U2512"/></svg></div>
+            <div class="border-row"><svg><use href="#U2503"/></svg><svg>                    </svg><svg><use href="#U2503"/></svg></div>
+            <div class="border-row"><svg><use href="#U2516"/></svg><svg><use href="#U2500"/></svg><svg><use href="#U251A"/></svg></div>
+          </div>
+        </div>
+
+        <div class="border">
+          <div class="border-label" title="📋 Click to copy the&#13;“wideDashed” border into&#13;the system clipboard" onclick="help=document.querySelector('aside');help.innerText='📋 Copied “wideDashed”';help.classList.remove('shake');navigator.clipboard.writeText('┌╌╌╌╌╌╌╌╌╌╌┐\n╎dashedWide╎\n└╌╌╌╌╌╌╌╌╌╌┘').then(() => help.classList.add('shake'))">wideDashed</div>
+          <div class="border-body">
+            <div class="border-row"><svg><use href="#U250C"/></svg><svg><use href="#U254C"/></svg><svg><use href="#U2510"/></svg></div>
+            <div class="border-row"><svg><use href="#U254E"/></svg><svg>                    </svg><svg><use href="#U254E"/></svg></div>
+            <div class="border-row"><svg><use href="#U2514"/></svg><svg><use href="#U254C"/></svg><svg><use href="#U2518"/></svg></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div></div>
+    <div></div>
+
+    <header>Named Border Sets</header>
+
+    <svg class="zs">
+      <defs>
+        <style>
+          g > path {
+            fill: var(--glyph-ink);
+            transition: fill 0s;
+          }
+          g > rect {
+            width: var(--glyph-size);
+            height: var(--glyph-size);
+            fill: var(--glyph-bg);
+            transition: fill 0s;
+          }
+        </style>
+        <path id="grd" />
+        <clipPath id="knb"><path /></clipPath>
+        <clipPath id="frm"><path /></clipPath>
+        <clipPath id="tng"><path /></clipPath>
+        <symbol id="ray-o"><path /></symbol>
+        <symbol id="ray-y"><path /></symbol>
+        <g id="U0020" onclick="copy(' ')"><rect/><title>📋 Click to copy “ ”&#13;(U0020 SPACE)&#13;into the system clipboard</title><path d="m0 0"/><use href="#grd"/></g>
+        <g id="U2500" onclick="copy('─')"><rect/><title>📋 Click to copy “─”&#13;(U2500 BOX DRAWINGS LIGHT HORIZONTAL)&#13;into the system clipboard</title><path d="m0 3h8v2h-8z"/><use href="#grd"/></g>
+        <g id="U2501" onclick="copy('━')"><rect/><title>📋 Click to copy “━”&#13;(U2501 BOX DRAWINGS HEAVY HORIZONTAL)&#13;into the system clipboard</title><path d="m0 2h8v4h-8z"/><use href="#grd"/></g>
+        <g id="U2502" onclick="copy('│')"><rect/><title>📋 Click to copy “│”&#13;(U2502 BOX DRAWINGS LIGHT VERTICAL)&#13;into the system clipboard</title><path d="m3 0v8h2v-8z"/><use href="#grd"/></g>
+        <g id="U2503" onclick="copy('┃')"><rect/><title>📋 Click to copy “┃”&#13;(U2503 BOX DRAWINGS HEAVY VERTICAL)&#13;into the system clipboard</title><path d="m2 0v8h4v-8z"/><use href="#grd"/></g>
+        <g id="U2504" onclick="copy('┄')"><rect/><title>📋 Click to copy “┄”&#13;(U2504 BOX DRAWINGS LIGHT TRIPLE DASH HORIZONTAL)&#13;into the system clipboard</title><path d="m0 3h2v2h-2zm3 0h3v2h-3zm4 0h1v2h-1z"/><use href="#grd"/></g>
+        <g id="U2505" onclick="copy('┅')"><rect/><title>📋 Click to copy “┅”&#13;(U2505 BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL)&#13;into the system clipboard</title><path d="m0 2h2v4h-2zm3 0h3v4h-3zm4 0h1v4h-1z"/><use href="#grd"/></g>
+        <g id="U2506" onclick="copy('┆')"><rect/><title>📋 Click to copy “┆”&#13;(U2506 BOX DRAWINGS LIGHT TRIPLE DASH VERTICAL)&#13;into the system clipboard</title><path d="m5 0v2h-2v-2zm0 3v3h-2v-3zm0 4v1h-2v-1z"/><use href="#grd"/></g>
+        <g id="U2507" onclick="copy('┇')"><rect/><title>📋 Click to copy “┇”&#13;(U2507 BOX DRAWINGS HEAVY TRIPLE DASH VERTICAL)&#13;into the system clipboard</title><path d="m6 0v2h-4v-2zm0 3v3h-4v-3zm0 4v1h-4v-1z"/><use href="#grd"/></g>
+        <g id="U2508" onclick="copy('┈')"><rect/><title>📋 Click to copy “┈”&#13;(U2508 BOX DRAWINGS LIGHT QUADRUPLE DASH HORIZONTAL)&#13;into the system clipboard</title><path d="m0 3h1v2h-1zm2 0h1v2h-1zm2 0h1v2h-1zm2 0h1v2h-1z"/><use href="#grd"/></g>
+        <g id="U2509" onclick="copy('┉')"><rect/><title>📋 Click to copy “┉”&#13;(U2509 BOX DRAWINGS HEAVY QUADRUPLE DASH HORIZONTAL)&#13;into the system clipboard</title><path d="m0 2h1v4h-1zm2 0h1v4h-1zm2 0h1v4h-1zm2 0h1v4h-1z"/><use href="#grd"/></g>
+        <g id="U250A" onclick="copy('┊')"><rect/><title>📋 Click to copy “┊”&#13;(U250A BOX DRAWINGS LIGHT QUADRUPLE DASH VERTICAL)&#13;into the system clipboard</title><path d="m5 0v1h-2v-1zm0 2v1h-2v-1zm0 2v1h-2v-1zm0 2v1h-2v-1z"/><use href="#grd"/></g>
+        <g id="U250B" onclick="copy('┋')"><rect/><title>📋 Click to copy “┋”&#13;(U250B BOX DRAWINGS HEAVY QUADRUPLE DASH VERTICAL)&#13;into the system clipboard</title><path d="m6 0v1h-4v-1zm0 2v1h-4v-1zm0 2v1h-4v-1zm0 2v1h-4v-1z"/><use href="#grd"/></g>
+        <g id="U250C" onclick="copy('┌')"><rect/><title>📋 Click to copy “┌”&#13;(U250C BOX DRAWINGS LIGHT DOWN AND RIGHT)&#13;into the system clipboard</title><path d="m3 3v5h2v-3h3v-2z"/><use href="#grd"/></g>
+        <g id="U250D" onclick="copy('┍')"><rect/><title>📋 Click to copy “┍”&#13;(U250D BOX DRAWINGS DOWN LIGHT AND RIGHT HEAVY)&#13;into the system clipboard</title><path d="m3 2v6h2v-2h3v-4z"/><use href="#grd"/></g>
+        <g id="U250E" onclick="copy('┎')"><rect/><title>📋 Click to copy “┎”&#13;(U250E BOX DRAWINGS DOWN HEAVY AND RIGHT LIGHT)&#13;into the system clipboard</title><path d="m2 3v5h4v-3h2v-2z"/><use href="#grd"/></g>
+        <g id="U250F" onclick="copy('┏')"><rect/><title>📋 Click to copy “┏”&#13;(U250F BOX DRAWINGS HEAVY DOWN AND RIGHT)&#13;into the system clipboard</title><path d="m2 2v6h4v-2h2v-4z"/><use href="#grd"/></g>
+        <g id="U2510" onclick="copy('┐')"><rect/><title>📋 Click to copy “┐”&#13;(U2510 BOX DRAWINGS LIGHT DOWN AND LEFT)&#13;into the system clipboard</title><path d="m5 3h-5v2h3v3h2z"/><use href="#grd"/></g>
+        <g id="U2511" onclick="copy('┑')"><rect/><title>📋 Click to copy “┑”&#13;(U2511 BOX DRAWINGS DOWN LIGHT AND LEFT HEAVY)&#13;into the system clipboard</title><path d="m5 2h-5v4h3v2h2z"/><use href="#grd"/></g>
+        <g id="U2512" onclick="copy('┒')"><rect/><title>📋 Click to copy “┒”&#13;(U2512 BOX DRAWINGS DOWN HEAVY AND LEFT LIGHT)&#13;into the system clipboard</title><path d="m6 3v5h-4v-3h-2v-2z"/><use href="#grd"/></g>
+        <g id="U2513" onclick="copy('┓')"><rect/><title>📋 Click to copy “┓”&#13;(U2513 BOX DRAWINGS HEAVY DOWN AND LEFT)&#13;into the system clipboard</title><path d="m6 2h-6v4h2v2h4z"/><use href="#grd"/></g>
+        <g id="U2514" onclick="copy('└')"><rect/><title>📋 Click to copy “└”&#13;(U2514 BOX DRAWINGS LIGHT UP AND RIGHT)&#13;into the system clipboard</title><path d="m3 5h5v-2h-3v-3h-2z"/><use href="#grd"/></g>
+        <g id="U2515" onclick="copy('┕')"><rect/><title>📋 Click to copy “┕”&#13;(U2515 BOX DRAWINGS UP LIGHT AND RIGHT HEAVY)&#13;into the system clipboard</title><path d="m3 6h5v-4h-3v-2h-2z"/><use href="#grd"/></g>
+        <g id="U2516" onclick="copy('┖')"><rect/><title>📋 Click to copy “┖”&#13;(U2516 BOX DRAWINGS UP HEAVY AND RIGHT LIGHT)&#13;into the system clipboard</title><path d="m2 5v-5h4v3h2v2z"/><use href="#grd"/></g>
+        <g id="U2517" onclick="copy('┗')"><rect/><title>📋 Click to copy “┗”&#13;(U2517 BOX DRAWINGS HEAVY UP AND RIGHT)&#13;into the system clipboard</title><path d="m2 6h6v-4h-2v-2h-4z"/><use href="#grd"/></g>
+        <g id="U2518" onclick="copy('┘')"><rect/><title>📋 Click to copy “┘”&#13;(U2518 BOX DRAWINGS LIGHT UP AND LEFT)&#13;into the system clipboard</title><path d="m5 5v-5h-2v3h-3v2z"/><use href="#grd"/></g>
+        <g id="U2519" onclick="copy('┙')"><rect/><title>📋 Click to copy “┙”&#13;(U2519 BOX DRAWINGS UP LIGHT AND LEFT HEAVY)&#13;into the system clipboard</title><path d="m3 0v2h-3v4h5v-6z"/><use href="#grd"/></g>
+        <g id="U251A" onclick="copy('┚')"><rect/><title>📋 Click to copy “┚”&#13;(U251A BOX DRAWINGS UP HEAVY AND LEFT LIGHT)&#13;into the system clipboard</title><path d="m6 5v-5h-4v3h-2v2z"/><use href="#grd"/></g>
+        <g id="U251B" onclick="copy('┛')"><rect/><title>📋 Click to copy “┛”&#13;(U251B BOX DRAWINGS HEAVY UP AND LEFT)&#13;into the system clipboard</title><path d="m6 6v-6h-4v2h-2v4z"/><use href="#grd"/></g>
+        <g id="U254C" onclick="copy('╌')"><rect/><title>📋 Click to copy “╌”&#13;(U254C BOX DRAWINGS LIGHT DOUBLE DASH HORIZONTAL)&#13;into the system clipboard</title><path d="m0 3h3v2h-3z m4 0h3v2h-3z"/><use href="#grd"/></g>
+        <g id="U254D" onclick="copy('╍')"><rect/><title>📋 Click to copy “╍”&#13;(U254D BOX DRAWINGS HEAVY DOUBLE DASH HORIZONTAL)&#13;into the system clipboard</title><path d="m0 2h3v4h-3z m4 0h3v4h-3z"/><use href="#grd"/></g>
+        <g id="U254E" onclick="copy('╎')"><rect/><title>📋 Click to copy “╎”&#13;(U254E BOX DRAWINGS LIGHT DOUBLE DASH VERTICAL)&#13;into the system clipboard</title><path d="m5 0v3h-2v-3zm0 4v3h-2v-3z"/><use href="#grd"/></g>
+        <g id="U254F" onclick="copy('╏')"><rect/><title>📋 Click to copy “╏”&#13;(U254F BOX DRAWINGS HEAVY DOUBLE DASH VERTICAL)&#13;into the system clipboard</title><path d="m6 0v3h-4v-3zm0 4v3h-4v-3z"/><use href="#grd"/></g>
+        <g id="U2550" onclick="copy('═')"><rect/><title>📋 Click to copy “═”&#13;(U2550 BOX DRAWINGS DOUBLE HORIZONTAL)&#13;into the system clipboard</title><path d="m0 2h8v1h-8z m0 3h8v1h-8z"/><use href="#grd"/></g>
+        <g id="U2551" onclick="copy('║')"><rect/><title>📋 Click to copy “║”&#13;(U2551 BOX DRAWINGS DOUBLE VERTICAL)&#13;into the system clipboard</title><path d="m6 0v8h-1v-8zm-3 0v8h-1v-8z"/><use href="#grd"/></g>
+        <g id="U2552" onclick="copy('╒')"><rect/><title>📋 Click to copy “╒”&#13;(U2552 BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE)&#13;into the system clipboard</title><path d="m3 2v6h2v-2h3v-1h-3v-2h3v-1z"/><use href="#grd"/></g>
+        <g id="U2553" onclick="copy('╓')"><rect/><title>📋 Click to copy “╓”&#13;(U2553 BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE)&#13;into the system clipboard</title><path d="m2 3h6v2h-2v3h-1v-3h-2v3h-1z"/><use href="#grd"/></g>
+        <g id="U2554" onclick="copy('╔')"><rect/><title>📋 Click to copy “╔”&#13;(U2554 BOX DRAWINGS DOUBLE DOWN AND RIGHT)&#13;into the system clipboard</title><path d="m2 2h6v1h-5v5h-1z m3 3h3v1h-2v2h-1z"/><use href="#grd"/></g>
+        <g id="U2555" onclick="copy('╕')"><rect/><title>📋 Click to copy “╕”&#13;(U2555 BOX DRAWINGS DOWN SINGLE AND LEFT DOUBLE)&#13;into the system clipboard</title><path d="m5 2v6h-2v-2h-3v-1h3v-2h-3v-1z"/><use href="#grd"/></g>
+        <g id="U2556" onclick="copy('╖')"><rect/><title>📋 Click to copy “╖”&#13;(U2556 BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE)&#13;into the system clipboard</title><path d="m6 3h-6v2h2v3h1v-3h2v3h1z"/><use href="#grd"/></g>
+        <g id="U2557" onclick="copy('╗')"><rect/><title>📋 Click to copy “╗”&#13;(U2557 BOX DRAWINGS DOUBLE DOWN AND LEFT)&#13;into the system clipboard</title><path d="m6 2v6h-1v-5h-5v-1zm-3 3v3h-1v-2h-2v-1z"/><use href="#grd"/></g>
+        <g id="U2558" onclick="copy('╘')"><rect/><title>📋 Click to copy “╘”&#13;(U2558 BOX DRAWINGS UP SINGLE AND RIGHT DOUBLE)&#13;into the system clipboard</title><path d="m3 6v-6h2v2h3v1h-3v2h3v1z"/><use href="#grd"/></g>
+        <g id="U2559" onclick="copy('╙')"><rect/><title>📋 Click to copy “╙”&#13;(U2559 BOX DRAWINGS UP DOUBLE AND RIGHT SINGLE)&#13;into the system clipboard</title><path d="m2 5h6v-2h-2v-3h-1v3h-2v-3h-1z"/><use href="#grd"/></g>
+        <g id="U255A" onclick="copy('╚')"><rect/><title>📋 Click to copy “╚”&#13;(U255A BOX DRAWINGS DOUBLE UP AND RIGHT)&#13;into the system clipboard</title><path d="m2 6v-6h1v5h5v1zm3-3v-3h1v2h2v1z"/><use href="#grd"/></g>
+        <g id="U255B" onclick="copy('╛')"><rect/><title>📋 Click to copy “╛”&#13;(U255B BOX DRAWINGS UP SINGLE AND LEFT DOUBLE)&#13;into the system clipboard</title><path d="m5 6v-6h-2v2h-3v1h3v2h-3v1z"/><use href="#grd"/></g>
+        <g id="U255C" onclick="copy('╜')"><rect/><title>📋 Click to copy “╜”&#13;(U255C BOX DRAWINGS UP DOUBLE AND LEFT SINGLE)&#13;into the system clipboard</title><path d="m6 5h-6v-2h2v-3h1v3h2v-3h1z"/><use href="#grd"/></g>
+        <g id="U255D" onclick="copy('╝')"><rect/><title>📋 Click to copy “╝”&#13;(U255D BOX DRAWINGS DOUBLE UP AND LEFT)&#13;into the system clipboard</title><path d="m6 6h-6v-1h5v-5h1zm-3-3h-3v-1h2v-2h1z"/><use href="#grd"/></g>
+        <g id="U256D" onclick="copy('╭')"><rect/><title>📋 Click to copy “╭”&#13;(U256D BOX DRAWINGS LIGHT ARC DOWN AND RIGHT)&#13;into the system clipboard</title><path d="m8 3h-3v1h-1v1h-1v3h2v-2h1v-1h2z"/><use href="#grd"/></g>
+        <g id="U256E" onclick="copy('╮')"><rect/><title>📋 Click to copy “╮”&#13;(U256E BOX DRAWINGS LIGHT ARC DOWN AND LEFT)&#13;into the system clipboard</title><path d="m0 3h3v1h1v1h1v3h-2v-2h-1v-1h-2z"/><use href="#grd"/></g>
+        <g id="U256F" onclick="copy('╯')"><rect/><title>📋 Click to copy “╯”&#13;(U256F BOX DRAWINGS LIGHT ARC UP AND LEFT)&#13;into the system clipboard</title><path d="m0 5h3v-1h1v-1h1v-3h-2v2h-1v1h-2z"/><use href="#grd"/></g>
+        <g id="U2570" onclick="copy('╰')"><rect/><title>📋 Click to copy “╰”&#13;(U2570 BOX DRAWINGS LIGHT ARC UP AND RIGHT)&#13;into the system clipboard</title><path d="m3 0v3h1v1h1v1h3v-2h-2v-1h-1v-2z"/><use href="#grd"/></g>
+        <g id="U2571" onclick="copy('╱')"><rect/><title>📋 Click to copy “╱”&#13;(U2571 BOX DRAWINGS LIGHT DIAGONAL UPPER RIGHT TO LOWER LEFT)&#13;into the system clipboard</title><path d="m8 0h-2v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v2h2v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1z"/><use href="#grd"/></g>
+        <g id="U2572" onclick="copy('╲')"><rect/><title>📋 Click to copy “╲”&#13;(U2572 BOX DRAWINGS LIGHT DIAGONAL UPPER LEFT TO LOWER RIGHT)&#13;into the system clipboard</title><path d="m0 0h2v1h1v1h1v1h1v1h1v1h1v1h1v2h-2v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1z"/><use href="#grd"/></g>
+        <g id="U2580" onclick="copy('▀')"><rect/><title>📋 Click to copy “▀”&#13;(U2580 UPPER HALF BLOCK)&#13;into the system clipboard</title><path d="m0 0v4h8v-4z"/><use href="#grd"/></g>
+        <g id="U2581" onclick="copy('▁')"><rect/><title>📋 Click to copy “▁”&#13;(U2581 LOWER ONE EIGHTH BLOCK)&#13;into the system clipboard</title><path d="m0 7v1h8v-1z"/><use href="#grd"/></g>
+        <g id="U2584" onclick="copy('▄')"><rect/><title>📋 Click to copy “▄”&#13;(U2584 LOWER HALF BLOCK)&#13;into the system clipboard</title><path d="m0 4v4h8v-4z"/><use href="#grd"/></g>
+        <g id="U2588" onclick="copy('█')"><rect/><title>📋 Click to copy “█”&#13;(U2588 FULL BLOCK)&#13;into the system clipboard</title><path d="m0 0h8v8h-8z"/><use href="#grd"/></g>
+        <g id="U258C" onclick="copy('▌')"><rect/><title>📋 Click to copy “▌”&#13;(U258C LEFT HALF BLOCK)&#13;into the system clipboard</title><path d="m0 0v8h4v-8z"/><use href="#grd"/></g>
+        <g id="U258F" onclick="copy('▏')"><rect/><title>📋 Click to copy “▏”&#13;(U258F LEFT ONE EIGHTH BLOCK)&#13;into the system clipboard</title><path d="m0 0v8h1v-8z"/><use href="#grd"/></g>
+        <g id="U2590" onclick="copy('▐')"><rect/><title>📋 Click to copy “▐”&#13;(U2590 RIGHT HALF BLOCK)&#13;into the system clipboard</title><path d="m4 0v8h4v-8z"/><use href="#grd"/></g>
+        <g id="U2594" onclick="copy('▔')"><rect/><title>📋 Click to copy “▔”&#13;(U2594 UPPER ONE EIGHTH BLOCK)&#13;into the system clipboard</title><path d="m0 0v1h8v-1z"/><use href="#grd"/></g>
+        <g id="U2595" onclick="copy('▕')"><rect/><title>📋 Click to copy “▕”&#13;(U2595 RIGHT ONE EIGHTH BLOCK)&#13;into the system clipboard</title><path d="m7 0v8h1v-8z"/><use href="#grd"/></g>
+        <g id="U2596" onclick="copy('▖')"><rect/><title>📋 Click to copy “▖”&#13;(U2596 QUADRANT LOWER LEFT)&#13;into the system clipboard</title><path d="m0 4h4v4h-4z"/><use href="#grd"/></g>
+        <g id="U2597" onclick="copy('▗')"><rect/><title>📋 Click to copy “▗”&#13;(U2597 QUADRANT LOWER RIGHT)&#13;into the system clipboard</title><path d="m4 4h4v4h-4z"/><use href="#grd"/></g>
+        <g id="U2598" onclick="copy('▘')"><rect/><title>📋 Click to copy “▘”&#13;(U2598 QUADRANT UPPER LEFT)&#13;into the system clipboard</title><path d="m0 0h4v4h-4z"/><use href="#grd"/></g>
+        <g id="U2599" onclick="copy('▙')"><rect/><title>📋 Click to copy “▙”&#13;(U2599 QUADRANT UPPER LEFT AND LOWER LEFT AND LOWER RIGHT)&#13;into the system clipboard</title><path d="m8 4h-4v-4h-4v8h8z"/><use href="#grd"/></g>
+        <g id="U259A" onclick="copy('▚')"><rect/><title>📋 Click to copy “▚”&#13;(U259A QUADRANT UPPER LEFT AND LOWER RIGHT)&#13;into the system clipboard</title><path d="m0 0h4v8h4v-4h-8z"/><use href="#grd"/></g>
+        <g id="U259B" onclick="copy('▛')"><rect/><title>📋 Click to copy “▛”&#13;(U259B QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER LEFT)&#13;into the system clipboard</title><path d="m8 4h-4v4h-4v-8h8z"/><use href="#grd"/></g>
+        <g id="U259C" onclick="copy('▜')"><rect/><title>📋 Click to copy “▜”&#13;(U259C QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER RIGHT)&#13;into the system clipboard</title><path d="m0 4h4v4h4v-8h-8z"/><use href="#grd"/></g>
+        <g id="U259D" onclick="copy('▝')"><rect/><title>📋 Click to copy “▝”&#13;(U259D QUADRANT UPPER RIGHT)&#13;into the system clipboard</title><path d="m4 0h4v4h-4z"/><use href="#grd"/></g>
+        <g id="U259E" onclick="copy('▞')"><rect/><title>📋 Click to copy “▞”&#13;(U259E QUADRANT UPPER RIGHT AND LOWER LEFT)&#13;into the system clipboard</title><path d="m8 0h-4v8h-4v-4h8z"/><use href="#grd"/></g>
+        <g id="U259F" onclick="copy('▟')"><rect/><title>📋 Click to copy “▟”&#13;(U259F QUADRANT UPPER RIGHT AND LOWER LEFT AND LOWER RIGHT)&#13;into the system clipboard</title><path d="m4 0v4h-4v4h8v-8z"/><use href="#grd"/></g>
+      </defs>
+
+    </svg>
+    <script defer>
+      const findHnd = () => document.querySelector(".hnd");
+      const htmlData = () => document.querySelector("html").dataset;
+      const isPageDark = () => htmlData()['theme'] === 'dark';
+
+      const toggle = () => {
+        const toggle = (find, cls) => {
+          const classes = document.querySelector(find).classList;
+          if (isPageDark()) classes.remove(cls);
+          else classes.add(cls);
+        };
+
+        htmlData()['theme'] = isPageDark() ? 'light' : 'dark';
+        toggle(".hnd", "knb-l");
+        toggle(".tng", "tng-l");
+      }
+
+      function knbClick() {
+        const code = window.event["code"];
+        if (code === undefined || (code !== "Tab" && code !== "Escape")) {
+          toggle();
+          window.event.preventDefault();
+        }
+        if (code === "Escape") findHnd().blur();
+      }
+
+      const darkMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+      if (darkMediaQuery.matches) toggle();
+
+      darkMediaQuery.addEventListener("change", e => {
+        const isDark = e.matches;
+        if (isDark && !isPageDark()) toggle();
+        if (!isDark && isPageDark()) toggle();
+      });
+
+      function copy(char) {
+        const help = document.querySelector('aside'),
+          classes = help.classList;
+
+        help.replaceChildren(
+          document.createTextNode(`📋 Copied “${char}”`),
+        );
+        classes.remove('shake');
+        navigator.clipboard.writeText(char).then(() => classes.add('shake'));
+      }
+    </script>
+  </body>
+</htm

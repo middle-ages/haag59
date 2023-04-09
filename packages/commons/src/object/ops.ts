@@ -1,11 +1,5 @@
-import {
-  array as AR,
-  function as FN,
-  readonlyArray as RA,
-  tuple as TU,
-} from 'fp-ts';
+import { AR, FN, RA, TU, Unary } from '../fp-ts.js';
 import { tuple as TUs } from 'fp-ts-std';
-import { Unary } from '../function.js';
 import { FromKeys, FromEntries, ObjectEntries, ObjectEntry } from './types.js';
 
 const { toSnd, withSnd } = TUs;

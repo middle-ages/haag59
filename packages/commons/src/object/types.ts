@@ -1,7 +1,5 @@
+import { Endo, Effect } from '../fp-ts.js';
 import { U } from 'ts-toolbelt';
-
-type Endo<T> = (t: T) => T;
-type Effect<T> = (t: T) => void;
 
 export type HasTotalKey<K extends PropertyKey, V> = { [k in K]: V };
 

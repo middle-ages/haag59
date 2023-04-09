@@ -101,6 +101,12 @@ function fix_project_description {
   replace_in_file "$1" "$package_config_local" %DESCRIPTION% "$desc"
 }
 
+function fix_project_repo_fields {
+  local desc
+  desc="$(first_cap_line "$project_readme")"
+  replace_in_file "$1" "$package_config_local" %DESCRIPTION% "$desc"
+}
+
 function project_version {
   grep '"version": "' "$package_config_local" | sed 's/.*\s"//;s/",$//'
 }

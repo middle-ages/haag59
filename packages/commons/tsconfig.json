@@ -4,11 +4,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "composite": true,
+    "declaration": true,
+    "declarationMap": true,
     "importsNotUsedAsValues": "remove",
     "incremental": true,
     "outDir": "esm",
     "sourceMap": true,
-    "tsBuildInfoFile": "esm/.tsbuildinfo"
+    "tsBuildInfoFile": "esm/.tsbuildinfo",
+    "types": ["node"]
   },
   "exclude": ["esm", "tests", "node_modules"]
 }

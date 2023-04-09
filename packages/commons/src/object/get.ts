@@ -1,13 +1,13 @@
 import { HasKey, KeyList, ValueList } from './types.js';
 
-/** Pick a subset of an exact type by keys
+/**
  *
- *  ```
- *  const picked: { a: number; b: string } = picks(
- *    'a',
- *    'b',
- *  )({ a: 1, b: 'foo', c: /re/ });
- *  ```
+ * Pick a subset of an exact type by keys
+ *
+ * ```ts
+ * const a = 1;
+ * ```
+ *
  */
 export const picks =
   <KS extends readonly PropertyKey[]>(...keys: KS) =>
@@ -44,3 +44,11 @@ export const pluckFrom =
   <K extends string>(k: K) =>
   <T extends HasKey<K, T[K]>>(): ((t: T) => T[K]) =>
     pluck(k);
+
+/*
+
+ * const picked: { a: number; b: string } = picks(
+ *   'a',
+ *   'b',
+ * )({ a: 1, b: 'foo', c: /re/ });
+    */

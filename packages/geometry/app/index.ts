@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import { size } from '../index.js';
+import { spacingSize } from '../index.js';
 
-console.log(size(3, 4));
+console.log(spacingSize(3, 4));

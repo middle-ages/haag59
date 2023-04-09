@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-# Given a project name will verify that project's configuration.
+# Given a project name will fix that project's configuration so that it is
+# correct
 #
 # The verification consists of copying some files from the shared config dir
 # (/config) to the local project dir, then customizing these files according to
-# the depends.txt file found at the project root, and according to the project
-# README.md.
+# the depends.txt file found at the project root, project README.md, and the
+# workspace package.json.
 #
 # If no depends.txt file is found, an empty one will be created.
 #
@@ -34,21 +35,21 @@ set -Eeuo pipefail
 
 . scripts/project-tasks.sh
 
-echo -e "⌛ Verifying project $project config using $(emp "$runner")..."
+echo -e "⌚ Verifying project $project config using $(emp "$runner")..."
 
-copy_uncommented 1 "$test_unit_config_shared" "$test_unit_config_local"
+copy_uncommented ① "$test_unit_config_shared" "$test_unit_config_local"
 
-copy 2 "$package_config_shared" "$package_config_local"
-copy 3 "$tsconfig_shared"       "$tsconfig_local"
-copy 4 "$tsconfig_tests_shared" "$tsconfig_tests_local"
-copy 5 "$api_extractor_shared"  "$api_extractor_local"
+copy ② "$package_config_shared" "$package_config_local"
+copy ③ "$tsconfig_shared"       "$tsconfig_local"
+copy ④ "$tsconfig_tests_shared" "$tsconfig_tests_local"
+copy ⑤ "$api_extractor_shared"  "$api_extractor_local"
 
-fix_project_name 6
-fix_project_description 7
+fix_project_name ⑥
+fix_project_description ⑦
 
-add_dependencies 8
+add_dependencies ⑧
 
-add_references 9
-add_testing_references 10
+add_references ⑨
+add_testing_references ⑩
 
 bye "configuring project $project."

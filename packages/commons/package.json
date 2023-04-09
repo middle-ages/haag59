@@ -7,19 +7,17 @@
   "license": "MIT",
   "private": true,
   "type": "module",
-  "bin": {
-    "commons-demo": "esm/app/index.js"
-  },
   "source": "./index.ts",
+  "directories": { "bin": "./esm/app" },
   "main": "./esm/index.js",
   "files": ["./esm/**/*"],
   "scripts": {
     "clean": "../../scripts/clean.sh",
     "lint": "eslint --ignore-path ../../.eslintignore  -c ../../.eslintrc.cjs '**/*.ts'",
     "lint:fix": "eslint --fix --ignore-path ../../.eslintignore  -c ../../.eslintrc.cjs '**/*.ts'",
-    "test": "vitest run --reporter=verbose --config ./tests/vitest.config.ts",
-    "test:dev": "vitest -c ./tests/vitest.config.ts",
-    "test:coverage": "vitest run --coverage --config ./tests/vitest.config.ts",
+    "test": "vitest run --reporter=verbose --config tests/vitest.config.ts",
+    "test:dev": "vitest -c tests/vitest.config.ts",
+    "test:coverage": "vitest run --coverage --config tests/vitest.config.ts",
     "build:compile": "tsc --noEmit",
     "build": "tsc",
     "rebuild": "pnpm clean && pnpm install && pnpm lint && pnpm build",
@@ -40,6 +38,7 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.0.1",
+    "@microsoft/api-extractor": "^7.34.4",
     "@tsconfig/node18-strictest-esm": "^1.0.1",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
@@ -47,8 +46,12 @@
     "fast-check": "2.6.0",
     "fp-ts-laws": "^0.3.0",
     "ts-toolbelt": "^9.6.0",
-    "vite-tsconfig-paths": "^4.0.5",
     "vite": "^4.0.4",
+    "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.28.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/middle-ages/haag59/tree/main/packages/commons"
   }
 }

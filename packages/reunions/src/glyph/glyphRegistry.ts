@@ -32,15 +32,43 @@ type DefByName = Record<RelationName, RelationDef>;
 type GlyphByChar = Map<string, Glyph>;
 
 export interface GlyphRegistry {
-  allRelations: Relation[];
+  /**
+   * A record of `RelationDef` per relation name. A `RelationDef` has a label
+   * and `Criteria`. The `Criteria` is a predicate on a pair of characters, true
+   * if they are both in the same equivalence class of the defined relation.
+   */
+  defByName: DefByName;
+
+  /**
+   * The list of all glyph relation names: “dash”, “hFlip”,“invert”,“shift”,
+   * “turn”,“weight”, and “vFlip”
+   */
+  allRelationNames: RelationName[];
+
+  /**
+   * A record of `Relation` per relation name. The `Relation` encodes all member pairs
+   * of the relation and caches the _chains_ of the relation
+   */
+  relations: RelationByName;
+
+  /**
+   * A map of `Glyph` per pseudographic character. The `Glyph` encodes the
+   * `CharRelations` of the glyph. These links the glyph to similar glyphs by
+   * relation.
+   */
+  glyphByChar: GlyphByChar;
+
+  /**
+   * The list of all character relations. These link glyphs to each other by
+   * similarity
+   * */
   allCharRelations: CharRelation[];
 
-  allRelationNames: RelationName[];
-  defs: RelationDef[];
+  /** The list of all glyph relations */
+  allRelations: Relation[];
 
-  defByName: DefByName;
-  relations: RelationByName;
-  glyphByChar: GlyphByChar;
+  /** The list of all relation definitions */
+  defs: RelationDef[];
 }
 
 export const makeGlyphRegistry: FN.Lazy<GlyphRegistry> = () => {

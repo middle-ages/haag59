@@ -16,8 +16,9 @@ The following applies to every package in the workspace, unless its `README.md` 
 
 Every workspace project features a `depends.txt` file at its root where its dependencies are declared. The configuration files `package.son`, `tsconfig.json`, etc. are all generated from this and some other sources of truth:
 
-1. Project directory name - will be the project _name_
-2. Project description from README.md - is the project _description_
+1. Project directory name - will be the `package.json` _name_
+2. Project description from README.md - becomes the `package.json` _description_
+3. The workspace root `package.json` is read for git and homepage info
 
 This is explained in [`verify-project.sh`](scripts/verify-project.sh). It is run when one of the truth sources changes in order to regenerate the configuration.
 
@@ -37,7 +38,7 @@ Lint scripts are configured to use the root project configuration from [`.eslint
 
 ### API-Extractor
 
-The central configuration is at [`config/api-extractor.shared.json`](config/api-extractor.shared.json). Projects have their own configuration file [`config/api-extractor.base.json`](config/api-extractor.base.json) which simply references the share configuration.
+The central configuration is at [`config/api-extractor.base.json`](config/api-extractor.base.json). Projects have their own configuration file [`config/api-extractor.shared.json`](config/api-extractor.shared.json). It references the base configuration.
 
 ## Project Scripts
 
@@ -58,12 +59,12 @@ The central configuration is at [`config/api-extractor.shared.json`](config/api-
 |13.|`run:node`     |Like `run` but from compiled Javascript|
 |14.|`check`        |Run tests and all apps/demos after a `rebuild`|
 
-This may help you grok inter-script dependencies of the _project_ scripts:
+In the diagram below you can see what project scripts are run as dependencies:
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="doc/imagesV3/package-script-dependencies-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="doc/imagesV3/package-script-dependencies-dark.svg">
-  <img alt="Project script dependencies" src="doc/imagesV3/package-script-dependencies-light.svg" width="30%">
+  <source media="(prefers-color-scheme: light)" srcset="doc/imagesV4/package-script-dependencies-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="doc/imagesV4/package-script-dependencies-dark.svg">
+  <img alt="Project script dependencies" src="doc/imagesV4/package-script-dependencies-light.svg" width="30%">
 </picture>
 
 ## Workspace Scripts
@@ -73,10 +74,11 @@ This may help you grok inter-script dependencies of the _project_ scripts:
 | 1.|`clean`           |Clean all projects|
 | 2.|`images`          |Upgrade image names to bust the image cache|
 | 3.|`check:project`   |`check` a single project|
-| 4.|`verify:project`  |Verify named project configuration. Create an empty project dir then run this to configure it|
-| 5.|`pack:project`    |Pack a single project|
-| 6.|`check`           |`check:project` on all projects|
-| 7.|`verify`          |`verify:project` on all projects|
-| 8.|`pack`            |`pack:project` on all projects|
+| 4.|`doc:project`     |Build docs for a single project|
+| 5.|`verify:project`  |Verify named project configuration. Create an empty project dir then run this to configure it|
+| 6.|`pack:project`    |Pack a single project|
+| 7.|`check`           |`check:project` on all projects|
+| 8.|`verify`          |`verify:project` on all projects|
+| 9.|`pack`            |`pack:project` on all projects|
 
 

@@ -1,11 +1,7 @@
-import { Effect, Endo, Unary } from 'commons';
-import { function as FN, readonlyArray as RA } from 'fp-ts';
-import { string as STRs } from 'fp-ts-std';
+import { Lazy, Effect, Endo, Unary, FN, RA, STR } from 'commons';
 import process from 'node:process';
 import { splitLines, stringWidth } from 'tty-strings';
 import { build as SZ, Size } from './size.js';
-
-const { unlines } = STRs;
 
 const defaultSize = SZ(80, 20);
 
@@ -13,7 +9,7 @@ type Stdout = NodeJS.WriteStream & {
   fd: 1;
 };
 
-export const isTty: FN.Lazy<boolean> = (() => {
+export const isTty: Lazy<boolean> = (() => {
   let cached: boolean | undefined = undefined;
   return () => {
     if (cached === undefined) cached = process?.stdout?.isTTY ?? false;
@@ -21,7 +17,7 @@ export const isTty: FN.Lazy<boolean> = (() => {
   };
 })();
 
-export const stdout: FN.Lazy<Stdout | undefined> = (() => {
+export const stdout: Lazy<Stdout | undefined> = (() => {
   let cached: Stdout | undefined = undefined;
   return () => {
     if (!isTty()) return undefined;
@@ -30,7 +26,7 @@ export const stdout: FN.Lazy<Stdout | undefined> = (() => {
   };
 })();
 
-export const [resetTermWidth, termWidth]: [Effect<void>, FN.Lazy<number>] =
+export const [resetTermWidth, termWidth]: [Effect<void>, Lazy<number>] =
   (() => {
     let cachedWidth: number | undefined = undefined;
     return [
@@ -43,7 +39,7 @@ export const [resetTermWidth, termWidth]: [Effect<void>, FN.Lazy<number>] =
     ];
   })();
 
-export const [resetTermHeight, termHeight]: [Effect<void>, FN.Lazy<number>] =
+export const [resetTermHeight, termHeight]: [Effect<void>, Lazy<number>] =
   (() => {
     let cachedHeight: number | undefined = undefined;
     return [
@@ -56,7 +52,7 @@ export const [resetTermHeight, termHeight]: [Effect<void>, FN.Lazy<number>] =
     ];
   })();
 
-export const termSize: FN.Lazy<Size> = () =>
+export const termSize: Lazy<Size> = () =>
   isTty() ? SZ(termWidth(), termHeight()) : defaultSize;
 
 export const addResizeHandler: Unary<Effect<void>, Size> = () => {
@@ -77,5 +73,5 @@ export const cropLine: Endo<string> = line => {
 export const cropParagraph: Endo<string> = FN.flow(
   splitLines,
   RA.map(cropLine),
-  unlines,
+  STR.unlines,
 );

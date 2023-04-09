@@ -7,8 +7,7 @@ set -Eeuo pipefail
 function error {
   echo
   msg "$(ko "$1")"
-  if [[ "${2:- }" != " " ]]
-  then
+  if [[ "${2:- }" != " " ]]; then
     msg "$2"
   fi
   echo
@@ -49,23 +48,30 @@ function replace_in_file {
 }
 
 function check_dir {
-  if [[ ! -d "$1" ]]
-  then
+  if [[ ! -d "$1" ]]; then
     error "${msg[nodir]} failed opening $(emp "$2") at $(path "$1")"
   fi
 }
 
 function check_arg {
-  if [[ "$2" = " " ]]
-  then
+  if [[ "$2" = " " ]]; then
     error "${msg[noarg]} got no $(emp "$1")"
   fi
 }
 
 function ensure_file {
-  if [[ ! -f "$1" ]]
-  then
+  if [[ -d "$1" ]]; then
+    error "${msg[unexpecteddir]} at $(path "$1")"
+    elif [[ ! -f "$1" ]]; then
     touch "$1"
+  fi
+}
+
+function ensure_dir {
+  if [[ -f "$1" ]]; then
+    error "${msg[unexpectedfile]} at $(path "$1")"
+    elif [[ ! -d "$1" ]]; then
+    mkdir -p "$1"
   fi
 }
 

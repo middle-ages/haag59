@@ -3,19 +3,19 @@
   "version": "1.0.0",
   "author": "middle-ages <ran@haag59.com> (https://middle-ages.github.io)",
   "description": "Haag59 project monorepo",
-  "homepage": "https://middle-ages.github.io/",
+  "homepage": "https://github.com/middle-ages/haag59",
   "license": "ISC",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "clean": "rm -f dist/*; pnpm -r clean",
     "images": "scripts/sync-workspace-images.sh",
-    "check:project": "scripts/check-project.sh",
-    "check:clean": "pnpm clean && pnpm verify && pnpm check",
     "verify:project": "scripts/verify-project.sh",
+    "check:project": "scripts/check-project.sh",
+    "doc:project": "scripts/doc-project.sh",
     "pack:project": "scripts/pack-project.sh",
-    "check": "scripts/check-workspace.sh",
     "verify": "scripts/verify-workspace.sh",
+    "check": "scripts/check-workspace.sh",
     "pack": "scripts/pack_workspace.sh"
   },
   "devDependencies": {
