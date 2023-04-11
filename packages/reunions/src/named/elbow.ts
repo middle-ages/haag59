@@ -6,12 +6,10 @@ import {
   Unary,
 } from 'commons';
 import { array as AR, function as FN, tuple as TU } from 'fp-ts';
-import { corner, Corners } from 'geometry';
+import { singletonCorner, cornered, Corners, cornerFromTuple } from 'geometry';
 import { line } from './line.js';
 import { solid as solidChar, space as spaceChar } from './other.js';
 import { ElbowGroup } from './types.js';
-
-const { cornered } = corner;
 
 export const diagonals = { fromTop: '╲', fromBottom: '╱' } as const;
 
@@ -30,10 +28,10 @@ export const sharpByRound = FN.pipe(
 );
 
 /** The round corners by direction */
-export const round = FN.pipe(roundBySharp, typedValues, corner.fromTuple);
+export const round = FN.pipe(roundBySharp, typedValues, cornerFromTuple);
 
 /** The sharp corners by direction */
-export const sharp = FN.pipe(sharpByRound, typedValues, corner.fromTuple);
+export const sharp = FN.pipe(sharpByRound, typedValues, cornerFromTuple);
 
 const fromPair: Unary<string, Corners> = pair => {
   if (pair.length !== 4) throw new Error(`quad with length≠4: “${pair}”`);
@@ -41,7 +39,7 @@ const fromPair: Unary<string, Corners> = pair => {
   return { topLeft, topRight, bottomLeft: topRight, bottomRight: topLeft };
 };
 
-const singleton: Unary<string, Corners> = corner.cornerSingleton;
+const singleton: Unary<string, Corners> = singletonCorner;
 
 const halfSolid = line.halfSolid,
   dup = (s: string) => s + s;

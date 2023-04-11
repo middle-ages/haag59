@@ -41,27 +41,27 @@ export const rect: Binary<Pos, Size, Rect> = (pos, size) => ({
   zOrder: 0,
 });
 
-export const tupled: Unary<[Pos, Size], Rect> = FN.tupled(rect);
+export const tupledRect: Unary<[Pos, Size], Rect> = FN.tupled(rect);
 
-export const fromPos: Unary<Pos, Rect> = p => rect(p, SZ.empty);
+export const rectFromPos: Unary<Pos, Rect> = p => rect(p, SZ.emptySize);
 
-export const atOrigin: Unary<Size, Rect> = sz => rect(PO.originPos, sz);
+export const rectAtOrigin: Unary<Size, Rect> = sz => rect(PO.originPos, sz);
 
-export const empty = rect(PO.originPos, SZ.empty);
+export const emptyRect = rect(PO.originPos, SZ.emptySize);
 
-export const fromQuad: Unary<Pair<Pair<number>>, Rect> = FN.flow(
-  TU.bimap(SZ.tupled, PO.tupledPos),
-  tupled,
+export const rectFromQuad: Unary<Pair<Pair<number>>, Rect> = FN.flow(
+  TU.bimap(SZ.tupledSize, PO.tupledPos),
+  tupledRect,
 );
 
-export const fromTuple: Unary<Tuple4<number>, Rect> = ([a, b, c, d]) =>
-  fromQuad([
+export const rectFromTuple: Unary<Tuple4<number>, Rect> = ([a, b, c, d]) =>
+  rectFromQuad([
     [a, b],
     [c, d],
   ]);
 
 /* Build from the given top left and bottom right corner position */
-export const fromCorners: Unary<Pair<Pos>, Rect> = ([fst, snd]) =>
+export const rectFromCorners: Unary<Pair<Pos>, Rect> = ([fst, snd]) =>
   rect(fst, PO.posRectSize([fst, snd]));
 
 //#endregion
@@ -69,22 +69,22 @@ export const fromCorners: Unary<Pair<Pos>, Rect> = ([fst, snd]) =>
 //#region query
 
 /** Chop width by half */
-export const halfWidth: Unary<Rect, number> = ({ size: { width } }) =>
+export const rectHalfWidth: Unary<Rect, number> = ({ size: { width } }) =>
   Math.floor((width - 1) / 2);
 
 /** Chop height by half */
-export const halfHeight: Unary<Rect, number> = ({ size: { height } }) =>
+export const rectHalfHeight: Unary<Rect, number> = ({ size: { height } }) =>
   Math.floor((height - 1) / 2);
 
 /** True if rectangle is cornered on origin and has no size or zOrder */
-export const isEmpty: PRE.Predicate<Rect> = ({ pos, size, zOrder }) =>
+export const rectIsEmpty: PRE.Predicate<Rect> = ({ pos, size, zOrder }) =>
   PO.isOriginPos(pos) && SZ.isEmpty(size) && zOrder === 0;
 
-export const minTopLeft: Unary<Rect[], Pos> = rs =>
-  FN.pipe(rs, AR.map(pos.get), rs => PO.min(rs));
+export const rectMinTopLeft: Unary<Rect[], Pos> = rs =>
+  FN.pipe(rs, AR.map(rectPos.get), rs => PO.min(rs));
 
-export const maxBottomRight = (rs: Rect[]): Pos =>
-  FN.pipe(rs, AR.map(bottomRight.get), rs => PO.max(rs));
+export const rectMaxBottomRight = (rs: Rect[]): Pos =>
+  FN.pipe(rs, AR.map(rectBottomRight.get), rs => PO.max(rs));
 
 //#endregion
 
@@ -93,90 +93,98 @@ export const maxBottomRight = (rs: Rect[]): Pos =>
 const id = LE.id<Rect>();
 
 /** Rectangle size lens */
-export const size = FN.pipe(id, LE.prop('size'), modLens);
+export const rectSize = FN.pipe(id, LE.prop('size'), modLens);
 
 /** Rectangle position lens */
-export const pos = FN.pipe(id, LE.prop('pos'), modLens);
+export const rectPos = FN.pipe(id, LE.prop('pos'), modLens);
 
 /** Rectangle zOrder lens */
-export const zOrder = FN.pipe(id, LE.prop('zOrder'), modLens);
+export const rectZorder = FN.pipe(id, LE.prop('zOrder'), modLens);
 
 /** Rectangle distance from x-axis lens */
-export const top = FN.pipe(pos, LE.compose(PO.posTop), modLens);
+export const rectTop = FN.pipe(rectPos, LE.compose(PO.posTop), modLens);
 
 /** Rectangle distance from y-axis lens */
-export const left = FN.pipe(pos, LE.compose(PO.posLeft), modLens);
+export const rectLeft = FN.pipe(rectPos, LE.compose(PO.posLeft), modLens);
 
 /** Rectangle width lens */
-export const width = FN.pipe(size, LE.compose(SZ.width), modLens);
+export const rectWidth = FN.pipe(rectSize, LE.compose(SZ.width), modLens);
 
 /** Rectangle height lens */
-export const height = FN.pipe(size, LE.compose(SZ.height), modLens);
+export const rectHeight = FN.pipe(rectSize, LE.compose(SZ.height), modLens);
 
-const directLenses = { size, pos, zOrder, top, left, width, height } as const;
+const directLenses = {
+  size: rectSize,
+  pos: rectPos,
+  zOrder: rectZorder,
+  top: rectTop,
+  left: rectLeft,
+  width: rectWidth,
+  height: rectHeight,
+} as const;
 
 //#endregion
 
 //#region computed lenses
 
 /** Rectangle right edge lense */
-export const right: ModLens<Rect, number> = modLens({
-  get: r => left.get(r) + width.get(r) - 1,
-  set: n => r => FN.pipe(r, left.set(n - width.get(r) + 1)),
+export const rectRight: ModLens<Rect, number> = modLens({
+  get: r => rectLeft.get(r) + rectWidth.get(r) - 1,
+  set: n => r => FN.pipe(r, rectLeft.set(n - rectWidth.get(r) + 1)),
 });
 
 /** Rectangle bottom edge lense */
-export const bottom: ModLens<Rect, number> = modLens({
-  get: r => top.get(r) + height.get(r) - 1,
-  set: n => r => FN.pipe(r, top.set(n - height.get(r) + 1)),
+export const rectBottom: ModLens<Rect, number> = modLens({
+  get: r => rectTop.get(r) + rectHeight.get(r) - 1,
+  set: n => r => FN.pipe(r, rectTop.set(n - rectHeight.get(r) + 1)),
 });
 
 /** Rectangle bottom right position lense */
-export const bottomRight: ModLens<Rect, Pos> = modLens({
-  get: r => PO.pos(bottom.get(r), right.get(r)),
-  set: p => r => FN.pipe(r, bottom.set(p.top), right.set(p.left)),
+export const rectBottomRight: ModLens<Rect, Pos> = modLens({
+  get: r => PO.pos(rectBottom.get(r), rectRight.get(r)),
+  set: p => r => FN.pipe(r, rectBottom.set(p.top), rectRight.set(p.left)),
 });
 
 /** Rectangle top right position lense */
-export const topRight: ModLens<Rect, Pos> = modLens({
-  get: r => PO.pos(top.get(r), right.get(r)),
-  set: p => r => FN.pipe(r, top.set(p.top), right.set(p.left)),
+export const rectTopRight: ModLens<Rect, Pos> = modLens({
+  get: r => PO.pos(rectTop.get(r), rectRight.get(r)),
+  set: p => r => FN.pipe(r, rectTop.set(p.top), rectRight.set(p.left)),
 });
 
 /** Rectangle bottom left position lense */
-export const bottomLeft: ModLens<Rect, Pos> = modLens({
-  get: r => PO.pos(bottom.get(r), left.get(r)),
-  set: p => r => FN.pipe(r, bottom.set(p.top), left.set(p.left)),
+export const rectBottomLeft: ModLens<Rect, Pos> = modLens({
+  get: r => PO.pos(rectBottom.get(r), rectLeft.get(r)),
+  set: p => r => FN.pipe(r, rectBottom.set(p.top), rectLeft.set(p.left)),
 });
 
 /** Rectangle horizontal rectangle center value lense */
-export const center: ModLens<Rect, number> = modLens({
-  get: r => left.get(r) + halfWidth(r),
-  set: n => r => FN.pipe(r, left.set(n - halfWidth(r))),
+export const rectCenter: ModLens<Rect, number> = modLens({
+  get: r => rectLeft.get(r) + rectHalfWidth(r),
+  set: n => r => FN.pipe(r, rectLeft.set(n - rectHalfWidth(r))),
 });
 
 /** Rectangle vertical rectangle middle value lense */
-export const middle: ModLens<Rect, number> = modLens({
-  get: r => top.get(r) + halfHeight(r),
-  set: n => r => FN.pipe(r, top.set(n - halfHeight(r))),
+export const rectMiddle: ModLens<Rect, number> = modLens({
+  get: r => rectTop.get(r) + rectHalfHeight(r),
+  set: n => r => FN.pipe(r, rectTop.set(n - rectHalfHeight(r))),
 });
 
 /** Rectangle middle-center position lense */
-export const middleCenter: ModLens<Rect, Pos> = modLens({
-  get: r => PO.pos(middle.get(r), center.get(r)),
+export const rectMiddleCenter: ModLens<Rect, Pos> = modLens({
+  get: r => PO.pos(rectMiddle.get(r), rectCenter.get(r)),
   set: ({ top: givenTop, left: givenLeft }) =>
-    FN.flow(middle.set(givenTop), center.set(givenLeft)),
+    FN.flow(rectMiddle.set(givenTop), rectCenter.set(givenLeft)),
 });
 
 const computedLenses = {
-  right,
-  bottom,
-  bottomRight,
-  topRight,
-  bottomLeft,
-  center,
-  middle,
-  middleCenter,
+  right: rectRight,
+  bottom: rectBottom,
+  bottomRight: rectBottomRight,
+  topRight: rectTopRight,
+  bottomLeft: rectBottomLeft,
+  center: rectCenter,
+  middle: rectMiddle,
+  middleCenter: rectMiddleCenter,
 } as const;
 
 //#endregion
@@ -189,7 +197,7 @@ export type RectLens = typeof lenses;
 export type RectLensKey = keyof RectLens;
 export type RectLensResult<K extends RectLensKey> = LensResult<RectLens[K]>;
 
-export const lensAt = <K extends RectLensKey>(k: K) =>
+export const rectLensAt = <K extends RectLensKey>(k: K) =>
   lenses[k] as RectLens[K] & ModLens<Rect, RectLensResult<K>>;
 
 //#endregion
@@ -197,92 +205,112 @@ export const lensAt = <K extends RectLensKey>(k: K) =>
 //#region modify
 
 /** Tupled version of `add` */
-export const addT: BinOpT<Rect> = ([fst, snd]) =>
-  isEmpty(fst)
+export const addRectT: BinOpT<Rect> = ([fst, snd]) =>
+  rectIsEmpty(fst)
     ? snd
-    : isEmpty(snd)
+    : rectIsEmpty(snd)
     ? fst
-    : fromCorners([minTopLeft([fst, snd]), maxBottomRight([fst, snd])]);
+    : rectFromCorners([
+        rectMinTopLeft([fst, snd]),
+        rectMaxBottomRight([fst, snd]),
+      ]);
 
 /** Get the bounding rectangle when two rectangles are stacked */
-export const add: BinOp<Rect> = (fst, snd) => addT([fst, snd]);
+export const addRect: BinOp<Rect> = (fst, snd) => addRectT([fst, snd]);
 
 /** Curried version of `add` */
-export const addC: BinOpC<Rect> = FN.curry2(add);
+export const addRectC: BinOpC<Rect> = FN.curry2(addRect);
 
 type SetNum = Unary<number, Endo<Rect>>;
 
 /** Add a position to the rectangle position */
-export const addPos: Unary<Pos, Endo<Rect>> = FN.flow(PO.addPosC, pos.mod);
-
-/** Get bounding box rect when added to another rectangle */
-export const addRect: Unary<Rect, Endo<Rect>> = FN.curry2(add);
+export const addRectPos: Unary<Pos, Endo<Rect>> = FN.flow(
+  PO.addPosC,
+  rectPos.mod,
+);
 
 /** Subtract a position from the rectangle position */
-export const subPos: Unary<Pos, Endo<Rect>> = FN.flow(PO.subPosC, pos.mod);
+export const subRectPos: Unary<Pos, Endo<Rect>> = FN.flow(
+  PO.subPosC,
+  rectPos.mod,
+);
 
 /** Add a size from the rectangle size */
-export const addSize: Unary<Size, Endo<Rect>> = FN.flow(SZ.addC, size.mod);
+export const addRectSize: Unary<Size, Endo<Rect>> = FN.flow(
+  SZ.addSizeC,
+  rectSize.mod,
+);
 
 /** Subtract a size from the rectangle size */
-export const subSize: Unary<Size, Endo<Rect>> = FN.flow(SZ.subC, size.mod);
+export const subRectSize: Unary<Size, Endo<Rect>> = FN.flow(
+  SZ.subSizeC,
+  rectSize.mod,
+);
 
 /** Add distance to the x-axis */
-export const addTop: SetNum = FN.flow(PO.addPosTop, pos.mod);
+export const addRectTop: SetNum = FN.flow(PO.addPosTop, rectPos.mod);
 
 /** Subtract distance from the x-axis */
-export const subTop: SetNum = FN.flow(PO.subPosTop, pos.mod);
+export const subRectTop: SetNum = FN.flow(PO.subPosTop, rectPos.mod);
 
 /** Add distance to the y-axis */
-export const addLeft: SetNum = FN.flow(PO.addPosLeft, pos.mod);
+export const addRectLeft: SetNum = FN.flow(PO.addPosLeft, rectPos.mod);
 
 /** Subtract distance from the y-axis */
-export const subLeft: SetNum = FN.flow(PO.subPosLeft, pos.mod);
+export const subRectLeft: SetNum = FN.flow(PO.subPosLeft, rectPos.mod);
 
 /** Add width to the rectangle size */
-export const addWidth: SetNum = FN.flow(SZ.addWidth, size.mod);
+export const addRectWidth: SetNum = FN.flow(SZ.addWidth, rectSize.mod);
 
 /** Subtract width from the rectangle size */
-export const subWidth: SetNum = FN.flow(SZ.subWidth, size.mod);
+export const subRectWidth: SetNum = FN.flow(SZ.subWidth, rectSize.mod);
 
 /** Add height to the rectangle size */
-export const addHeight: SetNum = FN.flow(SZ.addHeight, size.mod);
+export const addRectHeight: SetNum = FN.flow(SZ.addHeight, rectSize.mod);
 
 /** Subtract height from the rectangle size */
-export const subHeight: SetNum = FN.flow(SZ.subHeight, size.mod);
+export const subRectHeight: SetNum = FN.flow(SZ.subHeight, rectSize.mod);
 
 /** Increment width and height by one */
-export const incSize: Endo<Rect> = FN.pipe(SZ.unitSquare, SZ.addC, size.mod);
+export const incRectSize: Endo<Rect> = FN.pipe(
+  SZ.unitSquare,
+  SZ.addSizeC,
+  rectSize.mod,
+);
 
 /** width-- && height-- */
-export const decSize: Endo<Rect> = FN.pipe(SZ.unitSquare, SZ.subC, size.mod);
+export const decRectSize: Endo<Rect> = FN.pipe(
+  SZ.unitSquare,
+  SZ.subSizeC,
+  rectSize.mod,
+);
 
 /** Scale the rectangle size horizontally by given factor */
-export const scaleH: SetNum = FN.flow(SZ.scaleH, size.mod);
+export const scaleRectH: SetNum = FN.flow(SZ.scaleH, rectSize.mod);
 
 /** Scale the rectangle size vertically by given factor */
-export const scaleV: SetNum = FN.flow(SZ.scaleV, size.mod);
+export const scaleRectV: SetNum = FN.flow(SZ.scaleV, rectSize.mod);
 
 /** Scale the rectangle size by given factor */
-export const scale: SetNum = FN.flow(SZ.scale, size.mod);
+export const scaleRect: SetNum = FN.flow(SZ.scaleSize, rectSize.mod);
 
 export const shifts = {
   addRect,
-  addPos,
-  subPos,
-  addSize,
-  subSize,
-  addTop,
-  subTop,
-  addLeft,
-  subLeft,
-  addWidth,
-  subWidth,
-  addHeight,
-  subHeight,
-  scaleH,
-  scaleV,
-  scale,
+  addPos: addRectPos,
+  subPos: subRectPos,
+  addSize: addRectSize,
+  subSize: subRectSize,
+  addTop: addRectTop,
+  subTop: subRectTop,
+  addLeft: addRectLeft,
+  subLeft: subRectLeft,
+  addWidth: addRectWidth,
+  subWidth: subRectWidth,
+  addHeight: addRectHeight,
+  subHeight: subRectHeight,
+  scaleH: scaleRectH,
+  scaleV: scaleRectV,
+  scale: scaleRect,
 } as const;
 
 export type RectShift = typeof shifts;
@@ -297,44 +325,57 @@ export const shiftAt = <K extends RectShiftKey>(k: K) =>
 //#region zOrder
 
 /** zOrder++ */
-export const incZOrder = zOrder.mod(FN.increment);
+export const incZOrder = rectZorder.mod(FN.increment);
 
 /** zOrder-- */
-export const decZOrder = zOrder.mod(NU.decrement);
+export const decZOrder = rectZorder.mod(NU.decrement);
 
 /** Reset zOrder to default 0 value */
-export const unsetZOrder = zOrder.set(0);
+export const unsetZOrder = rectZorder.set(0);
 
 //#endregion
 
 //#region instances
 
 /** Predicate for rectangle position equality */
-export const eqPos: EQ.Eq<Rect> = FN.pipe(PO.eqPos, EQ.contramap(pos.get));
+export const rectEqPos: EQ.Eq<Rect> = FN.pipe(
+  PO.eqPos,
+  EQ.contramap(rectPos.get),
+);
 
 /** Predicate for rectangle size equality */
-export const eqSize: EQ.Eq<Rect> = FN.pipe(SZ.eq, EQ.contramap(size.get));
+export const rectEqSize: EQ.Eq<Rect> = FN.pipe(
+  SZ.eqSize,
+  EQ.contramap(rectSize.get),
+);
 
 /** `Rect` equality predicate */
-export const equals: Unary<Rect, PRE.Predicate<Rect>> = fst => snd =>
-  eqPos.equals(fst, snd) && eqSize.equals(fst, snd);
+export const rectEquals: Unary<Rect, PRE.Predicate<Rect>> = fst => snd =>
+  rectEqPos.equals(fst, snd) && rectEqSize.equals(fst, snd);
 
 /** `Rect` `Eq` instance */
-export const eq: EQ.Eq<Rect> = FN.pipe(equals, uncurry2T, EQ.fromEquals);
+export const rectEq: EQ.Eq<Rect> = FN.pipe(
+  rectEquals,
+  uncurry2T,
+  EQ.fromEquals,
+);
 
 /** `Rect` `Show` instance */
-export const show: SH.Show<Rect> = {
-  show: ({ pos, size }) => PO.showPos.show(pos) + ' ' + SZ.show.show(size),
+export const showRect: SH.Show<Rect> = {
+  show: ({ pos, size }) => PO.showPos.show(pos) + ' ' + SZ.showSize.show(size),
 };
 /** Monoid for the bounding rectangle operation */
-export const monoid: MO.Monoid<Rect> = { concat: add, empty };
+export const rectMonoid: MO.Monoid<Rect> = {
+  concat: addRect,
+  empty: emptyRect,
+};
 
 //#endregion
 
 //#region query
 
 /** Covert rect without zOrder to pair of pairs of size and position */
-export const toQuad = <R extends Rect>({
+export const rectToQuad = <R extends Rect>({
   pos: { top, left },
   size: { width, height },
 }: R): Pair<Pair<number>> => [
@@ -343,16 +384,16 @@ export const toQuad = <R extends Rect>({
 ];
 
 /** Covert rect without zOrder to 4-tuple of size and position */
-export const toTuple = FN.flow(toQuad, flattenPair);
+export const rectToTuple = FN.flow(rectToQuad, flattenPair);
 
 /** Get top left and bottom right positions of the rectangle */
 export const getCorners: Unary<Rect, Pair<Pos>> = FN.fork([
-  pos.get,
-  bottomRight.get,
+  rectPos.get,
+  rectBottomRight.get,
 ]);
 
 /** Rectangle width * height */
-export const area = FN.flow(size.get, SZ.area);
+export const rectArea = FN.flow(rectSize.get, SZ.area);
 
 //#endregion
 
@@ -363,14 +404,14 @@ export const area = FN.flow(size.get, SZ.area);
  *
  * Translates all rectangles to the positive quadrant
  */
-export const translateToPositive = (rs: Rect[]): Rect[] =>
+export const translateRectToPositive = (rs: Rect[]): Rect[] =>
     FN.pipe(
       rs,
-      AR.map(pos.get),
+      AR.map(rectPos.get),
       PO.translateToPositive,
       AR.zip(rs),
-      AR.map(([p, r]) => FN.pipe(r, pos.set(p))),
+      AR.map(([p, r]) => FN.pipe(r, rectPos.set(p))),
     ),
-  stack: Unary<Rect[], Rect> = MO.concatAll(monoid);
+  stack: Unary<Rect[], Rect> = MO.concatAll(rectMonoid);
 
 //#endregion

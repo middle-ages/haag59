@@ -13,7 +13,7 @@ import {
 } from 'commons';
 import { lens as LE } from 'monocle-ts';
 import { Directed, HDir, VDir } from './dir.js';
-import { tupled as buildSize } from './size.js';
+import { tupledSize as buildSize } from './size.js';
 
 /** A `Directed<number>` - record of distance per direction */
 export type Spacing = Directed<number>;
@@ -32,33 +32,33 @@ export const spacing = (top = 0, right = 0, bottom = 0, left = 0) => ({
   bottom,
   left,
 });
-export const empty = spacing();
+export const emptySpacing = spacing();
 export const of: Unary<Partial<Spacing>, Spacing> = args => ({
-  ...empty,
+  ...emptySpacing,
   ...args,
 });
 
 /** Build from tuple in order `“top”, “right”, “bottom”, and “left” ` */
-export const tupled = FN.tupled(spacing);
+export const tupledSpacing = FN.tupled(spacing);
 
 /** Create a spacing from a pair of horizontal and vertical values */
 export const rectSpacing: Unary<Pair<number>, Spacing> = ([h, v]) =>
   spacing(v, h, v, h);
 
 /** Create a spacing from a single value */
-export const square: Unary<number, Spacing> = n => rectSpacing([n, n]);
+export const squareSpacing: Unary<number, Spacing> = n => rectSpacing([n, n]);
 
 /** Create top spacing */
-export const fromTop: Unary<number, Spacing> = n => spacing(n);
+export const spacingFromTop: Unary<number, Spacing> = n => spacing(n);
 
 /** Create right spacing */
-export const fromRight: Unary<number, Spacing> = n => spacing(0, n);
+export const spacingFromRight: Unary<number, Spacing> = n => spacing(0, n);
 
 /** Create bottom spacing */
-export const fromBottom: Unary<number, Spacing> = n => spacing(0, 0, n);
+export const spacingFromBottom: Unary<number, Spacing> = n => spacing(0, 0, n);
 
 /** Create left spacing */
-export const fromLeft: Unary<number, Spacing> = n => spacing(0, 0, 0, n);
+export const spacingFromLeft: Unary<number, Spacing> = n => spacing(0, 0, 0, n);
 
 /** Create a horizontal spacing from a single value */
 export const hSpacing: Unary<number, Spacing> = h => rectSpacing([h, 0]);
@@ -66,14 +66,14 @@ export const hSpacing: Unary<number, Spacing> = h => rectSpacing([h, 0]);
 /** Create a vertical spacing from a single value */
 export const vSpacing: Unary<number, Spacing> = v => rectSpacing([0, v]);
 
-export const zeroWidth: Endo<Spacing> = ({ left, right }) => ({
+export const zeroWidthSpacing: Endo<Spacing> = ({ left, right }) => ({
   top: 0,
   right,
   bottom: 0,
   left,
 });
 
-export const zeroHeight: Endo<Spacing> = ({ top, bottom }) => ({
+export const zeroHeightSpacing: Endo<Spacing> = ({ top, bottom }) => ({
   top,
   right: 0,
   bottom,
@@ -87,7 +87,7 @@ export const zeroHeight: Endo<Spacing> = ({ top, bottom }) => ({
 const [nm, ne] = [NU.MonoidSum, NU.Eq];
 
 /** Sum monoid for `Spacing` */
-export const monoid: MO.Monoid<Spacing> = MO.struct({
+export const spacingMonoid: MO.Monoid<Spacing> = MO.struct({
   top: nm,
   right: nm,
   bottom: nm,
@@ -95,7 +95,7 @@ export const monoid: MO.Monoid<Spacing> = MO.struct({
 });
 
 /** `Spacing` `Eq` instance */
-export const eq: EQ.Eq<Spacing> = EQ.struct({
+export const spacingEq: EQ.Eq<Spacing> = EQ.struct({
   top: ne,
   right: ne,
   bottom: ne,
@@ -103,7 +103,7 @@ export const eq: EQ.Eq<Spacing> = EQ.struct({
 });
 
 /** `Spacing` `Show` instance */
-export const show: SH.Show<Spacing> = {
+export const showSpacing: SH.Show<Spacing> = {
   show: ({ top, right, bottom, left }) =>
     `▲${top} ▶${right} ▼${bottom} ◀${left}`,
 };
@@ -147,20 +147,25 @@ export const spacingLeft: ModLens<Spacing, number> = FN.pipe(
 //#region query
 
 /** The width taken up by the spacing */
-export const width: Unary<Spacing, number> = sp =>
+export const spacingWidth: Unary<Spacing, number> = sp =>
   FN.pipe(sp, spacingLeft.get, FN.pipe(sp, spacingRight.get, NU.add));
 
 /** The height taken up by the spacing */
-export const height: Unary<Spacing, number> = sp =>
+export const spacingHeight: Unary<Spacing, number> = sp =>
   FN.pipe(sp, spacingTop.get, FN.pipe(sp, spacingBottom.get, NU.add));
 
 /** Get the sized taken by the spacing */
-export const size = FN.flow(FN.fork([width, height]), buildSize);
+export const spacingSize = FN.flow(
+  FN.fork([spacingWidth, spacingHeight]),
+  buildSize,
+);
 
 /** True if spacing has width component */
-export const hasWidth: PRE.Predicate<Spacing> = sp => width(sp) > 0;
+export const spacingHasWidth: PRE.Predicate<Spacing> = sp =>
+  spacingWidth(sp) > 0;
 
 /** True if spacing has height component */
-export const hasHeight: PRE.Predicate<Spacing> = sp => height(sp) > 0;
+export const spacingHasHeight: PRE.Predicate<Spacing> = sp =>
+  spacingHeight(sp) > 0;
 
 //#endregion

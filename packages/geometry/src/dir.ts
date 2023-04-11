@@ -123,10 +123,11 @@ const snugDirMap: Record<Dir, Readonly<Pair<Dir>>> = {
 };
 
 /** The snug dirs of a direction are the two adjacent directions */
-export const snug: Unary<Dir, Pair<Dir>> = dir => snugDirMap[dir] as Pair<Dir>;
+export const snugDir: Unary<Dir, Pair<Dir>> = dir =>
+  snugDirMap[dir] as Pair<Dir>;
 
 /** A `Directed<T>` of a single value */
-export const singleton = <T>(t: T): Directed<T> => ({
+export const singletonDir = <T>(t: T): Directed<T> => ({
   top: t,
   right: t,
   bottom: t,
@@ -134,7 +135,7 @@ export const singleton = <T>(t: T): Directed<T> => ({
 });
 
 /** Type guard from `string` to `Dir` */
-export const check = (d: string): d is Dir => d in dirSym;
+export const checkDir = (d: string): d is Dir => d in dirSym;
 
 /** Add `left` and `right` keys to given pair to create a record */
 export const withHDirs = <T>([left, right]: Pair<T>): Record<HDir, T> => ({
@@ -159,16 +160,20 @@ const dirSym = {
  * Access directions as fields on `dir` instead of as strings. For example:
  * `dir.top = “top”`
  */
-export const values = FN.pipe(allDirs, RA.map(TUs.dup), Object.fromEntries) as {
+export const dirValues = FN.pipe(
+  allDirs,
+  RA.map(TUs.dup),
+  Object.fromEntries,
+) as {
   [K in Dir]: K;
 };
 
 /** Map over direction to make a 4-tuple */
-export const map = <R>(f: Unary<Dir, R>) =>
+export const mapDirs = <R>(f: Unary<Dir, R>) =>
   FN.pipe([...allDirs], AR.map(f)) as Tuple4<R>;
 
 /** Zip a 4-tuple with the directions */
-export const zip = <R>(r: Tuple4<R>) =>
+export const zipDirs = <R>(r: Tuple4<R>) =>
   FN.pipe([...allDirs], AR.zip(r)) as Tuple4<[Dir, R]>;
 
 /** Map over horizontal directions to make a pair */
@@ -188,7 +193,7 @@ export const pairReversed = <D extends Dir>(d: D) =>
   [d, reversed(d)] as [D, ReversedDir[D]];
 
 /** Match by `Dir` */
-export const match =
+export const matchDir =
   <R>(top: R, right: R, bottom: R, left: R): Unary<Dir, R> =>
   dir =>
     dir === 'top'
@@ -200,7 +205,7 @@ export const match =
       : left;
 
 /** `Dir` `Show` instance */
-export const show: SH.Show<Dir> = { show: dir => dirSym[dir] };
+export const showDir: SH.Show<Dir> = { show: dir => dirSym[dir] };
 
 /** Convert a string of 4 border characters to a `Direct` */
 export const direct: Unary<string, Direct> = quad => {

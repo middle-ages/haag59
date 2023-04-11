@@ -1,14 +1,26 @@
 import { function as FN } from 'fp-ts';
 import {
-  HSpacing,
-  size as SZ,
-  spacing as SP,
-  Spacing,
-  VSpacing,
-  align as AL,
   Align,
+  BR,
   HAlign,
+  HSpacing,
+  MC,
+  Spacing,
   VAlign,
+  VSpacing,
+  buildSize,
+  center,
+  emptySpacing,
+  hAlignSym,
+  mapVAlign,
+  middleCenter,
+  showAlign,
+  showSize,
+  shrinkSpacing,
+  subHeightFromSpacing,
+  subWidthFromSpacing,
+  topLeft,
+  vAlignSym,
 } from '../index.js';
 
 const target = {
@@ -20,14 +32,14 @@ const target = {
 
 const vEmpty = { top: 0, bottom: 0 };
 
-const [hIut, vIut] = [AL.subWidthFromSpacing, AL.subHeightFromSpacing];
+const [hIut, vIut] = [subWidthFromSpacing, subHeightFromSpacing];
 
 const testHAlign = (width: number) => (hAlign: HAlign, expect: HSpacing) =>
-    test(AL.hAlignSym[hAlign], () =>
+    test(hAlignSym[hAlign], () =>
       assert.deepEqual(hIut(target, hAlign, width), { ...target, ...expect }),
     ),
   testVAlign = (height: number) => (vAlign: VAlign, expect: VSpacing) =>
-    test(AL.vAlignSym[vAlign], () =>
+    test(vAlignSym[vAlign], () =>
       assert.deepEqual(vIut(target, vAlign, height), {
         ...target,
         ...expect,
@@ -43,7 +55,7 @@ suite('align basic', () => {
       suite('height > top + bottom', () => {
         const testAlign = (vAlign: VAlign) =>
           testVAlign(20)(vAlign, { ...target, ...vEmpty });
-        AL.mapVAlign(testAlign);
+        mapVAlign(testAlign);
       });
 
       suite('height=2', () => {
@@ -70,7 +82,7 @@ suite('align basic', () => {
       suite('height = top + bottom', () => {
         const testAlign = (vAlign: VAlign) =>
           testVAlign(19)(vAlign, { ...target, ...vEmpty });
-        AL.mapVAlign(testAlign);
+        mapVAlign(testAlign);
       });
     });
 
@@ -90,36 +102,33 @@ suite('align basic', () => {
   suite('shrinkSpacing', () => {
     const testShrink =
       (width: number, height: number) => (align: Align, expect: Spacing) => {
-        const size = SZ(width, height);
-        test(AL.show.show(align) + ' ' + SZ.show.show(size), () =>
-          assert.deepEqual(
-            FN.pipe(target, AL.shrinkSpacing(align)(size)),
-            expect,
-          ),
+        const sz = buildSize(width, height);
+        test(showAlign.show(align) + ' ' + showSize.show(sz), () =>
+          assert.deepEqual(FN.pipe(target, shrinkSpacing(align)(sz)), expect),
         );
       };
 
-    testShrink(0, 0)(AL.center, target);
-    testShrink(13, 19)(AL.topLeft, SP.empty);
+    testShrink(0, 0)(center, target);
+    testShrink(13, 19)(topLeft, emptySpacing);
 
     suite('both', () => {
       const testHalf = testShrink(6, 9);
 
-      testHalf(AL.topLeft, {
+      testHalf(topLeft, {
         top: 0,
         right: 4,
         bottom: 10,
         left: 3,
       });
 
-      testHalf(AL.middleCenter, {
+      testHalf(middleCenter, {
         top: 0,
         right: 1,
         bottom: 10,
         left: 6,
       });
 
-      testHalf(AL.BR, {
+      testHalf(BR, {
         top: 2,
         right: 0,
         bottom: 8,
@@ -128,7 +137,7 @@ suite('align basic', () => {
     });
 
     suite('all', () => {
-      testShrink(13, 19)(AL.MC, {
+      testShrink(13, 19)(MC, {
         top: 0,
         right: 0,
         bottom: 0,

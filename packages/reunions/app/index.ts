@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { term } from 'geometry';
+import { termWidth } from 'geometry';
 import { bitmapRegistry, BitmapRole, rolesReport } from '../index.js';
 
 /**
@@ -28,7 +28,7 @@ if (process.argv[2] === '-h') {
   process.exit();
 }
 
-const width = term.termWidth();
+const width = termWidth();
 
 const roles =
   process.argv[2] !== undefined

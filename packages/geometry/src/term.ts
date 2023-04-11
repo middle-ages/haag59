@@ -1,7 +1,7 @@
 import { Lazy, Effect, Endo, Unary, FN, RA, STR } from 'commons';
 import process from 'node:process';
 import { splitLines, stringWidth } from 'tty-strings';
-import { build as SZ, Size } from './size.js';
+import { buildSize as SZ, Size } from './size.js';
 
 const defaultSize = SZ(80, 20);
 

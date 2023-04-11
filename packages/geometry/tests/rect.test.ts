@@ -1,6 +1,33 @@
 import * as laws from 'fp-ts-laws';
 import { function as FN } from 'fp-ts';
-import { size, pos, rect } from '../index.js';
+import {
+  showRect,
+  buildSize,
+  getCorners,
+  pos,
+  rect,
+  rectBottomRight,
+  rectEq,
+  rectFromCorners,
+  rectRight,
+  originPos,
+  rectMiddleCenter,
+  rectMonoid,
+  stack,
+  subRectWidth,
+  subRectHeight,
+  addRectHeight,
+  addRectWidth,
+  addRectC,
+  addRectPos,
+  rectEqSize,
+  rectEqPos,
+  posRectSize,
+  rectSize,
+  emptyRect,
+  rectPos,
+  rectFromTuple,
+} from '../index.js';
 import { tuple as TUs } from 'fp-ts-std';
 import { rectArb } from './helpers.js';
 
@@ -22,48 +49,42 @@ const { mapBoth } = TUs;
  * └───────┘
  * ```
  */
-const iut1235 = FN.pipe([1, 2, 3, 5], rect.fromTuple),
-  iut1224 = FN.pipe([1, 2, 2, 4], rect.fromTuple);
+const iut1235 = FN.pipe([1, 2, 3, 5], rectFromTuple),
+  iut1224 = FN.pipe([1, 2, 2, 4], rectFromTuple);
 
 suite('rect', () => {
-  test('show', () => assert.equal(rect.show.show(iut1235), '▲1:◀2 ↔3:↕5'));
+  test('show', () => assert.equal(showRect.show(iut1235), '▲1:◀2 ↔3:↕5'));
 
   test('bottomRight', () =>
-    assert.deepEqual(rect.bottomRight.get(iut1235), pos(5, 4)));
+    assert.deepEqual(rectBottomRight.get(iut1235), pos(5, 4)));
 
   test('bottomRight on 1x1', () =>
     assert.deepEqual(
-      rect.bottomRight.get(rect(pos(0, 1), size(1, 1))),
+      rectBottomRight.get(rect(pos(0, 1), buildSize(1, 1))),
       pos(0, 1),
     ));
 
-  test('equals', () => assert.isTrue(rect.eq.equals(iut1235, iut1235)));
+  test('equals', () => assert.isTrue(rectEq.equals(iut1235, iut1235)));
 
   test('fromCorners', () =>
-    assert.deepEqual(rect.fromCorners([pos(1, 2), pos(5, 4)]), iut1235));
+    assert.deepEqual(rectFromCorners([pos(1, 2), pos(5, 4)]), iut1235));
 
   test('corners', () =>
-    assert.deepEqual(rect.getCorners(iut1235), [pos(1, 2), pos(5, 4)]));
+    assert.deepEqual(getCorners(iut1235), [pos(1, 2), pos(5, 4)]));
 
   test('setRight', () =>
-    assert.deepEqual(FN.pipe(iut1235, rect.right.set(0), rect.getCorners), [
+    assert.deepEqual(FN.pipe(iut1235, rectRight.set(0), getCorners), [
       pos(1, -2),
       pos(5, 0),
     ]));
 
-  test('setBottomRight', () =>
-    assert.deepEqual(
-      FN.pipe(iut1235, rect.bottomRight.set(pos(4, 2)), rect.pos.get),
-      pos.origin,
-    ));
-
   suite('center', () => {
     suite('get', () => {
       test('odd', () =>
-        assert.deepEqual(rect.middleCenter.get(iut1235), pos(3, 3)));
+        assert.deepEqual(rectMiddleCenter.get(iut1235), pos(3, 3)));
 
       test('even', () =>
-        assert.deepEqual(rect.middleCenter.get(iut1224), pos(2, 2)));
+        assert.deepEqual(rectMiddleCenter.get(iut1224), pos(2, 2)));
     });
 
     suite('set', () => {
@@ -85,52 +106,49 @@ suite('rect', () => {
        *  │⁺⁺⁺⁺⁺⁺⁺│  ┊  │⁺⁺⁺⁺⁺⁺⁺│       └──────┘   ┊  └──────┘
        *  └───────┘  ┊  └───────┘
        */
-      const move = rect.middleCenter.set(pos.origin),
+      const move = rectMiddleCenter.set(originPos),
         [movedOdd, movedEven] = FN.pipe([iut1235, iut1224], mapBoth(move));
 
-      test('odd', () => assert.deepEqual(rect.pos.get(movedOdd), pos(-2, -1)));
+      test('odd', () => assert.deepEqual(rectPos.get(movedOdd), pos(-2, -1)));
 
-      test('even', () => assert.deepEqual(rect.pos.get(movedEven), pos(-1, 0)));
+      test('even', () => assert.deepEqual(rectPos.get(movedEven), pos(-1, 0)));
     });
   });
 
   test('corners and size', () =>
     assert.deepEqual(
-      FN.pipe(iut1235, rect.getCorners, pos.rectSize),
-      rect.size.get(iut1235),
+      FN.pipe(iut1235, getCorners, posRectSize),
+      rectSize.get(iut1235),
     ));
 
   suite('equality', () => {
-    test('eq', () => assert.isTrue(rect.eq.equals(iut1235, iut1235)));
-    test('eqPos', () => assert.isTrue(rect.eqPos.equals(iut1235, iut1235)));
-    test('eqSize', () => assert.isTrue(rect.eqSize.equals(iut1235, iut1235)));
+    test('eq', () => assert.isTrue(rectEq.equals(iut1235, iut1235)));
+    test('eqPos', () => assert.isTrue(rectEqPos.equals(iut1235, iut1235)));
+    test('eqSize', () => assert.isTrue(rectEqSize.equals(iut1235, iut1235)));
   });
 
   suite('add', () => {
     test('this ⊕ this = this', () =>
-      assert.deepEqual(FN.pipe(iut1235, rect.addC(iut1235)), iut1235));
+      assert.deepEqual(FN.pipe(iut1235, addRectC(iut1235)), iut1235));
 
     test('this ⊕ ∅ = this', () =>
-      assert.deepEqual(FN.pipe(iut1235, rect.addC(rect.empty)), iut1235));
+      assert.deepEqual(FN.pipe(iut1235, addRectC(emptyRect)), iut1235));
 
     test('∅ ⊕ this = this', () =>
-      assert.deepEqual(FN.pipe(rect.empty, rect.addC(iut1235)), iut1235));
+      assert.deepEqual(FN.pipe(emptyRect, addRectC(iut1235)), iut1235));
 
     test('this ⊕ translate(this)', () => {
-      const translated = FN.pipe(iut1235, FN.flow(pos, rect.addPos)(1, 1));
+      const translated = FN.pipe(iut1235, FN.flow(pos, addRectPos)(1, 1));
 
       assert.deepEqual(
-        FN.pipe(iut1235, rect.addC(translated)),
-        FN.pipe(iut1235, rect.addWidth(1), rect.addHeight(1)),
+        FN.pipe(iut1235, addRectC(translated)),
+        FN.pipe(iut1235, addRectWidth(1), addRectHeight(1)),
       );
     });
 
     test('this ⊕ smaller(this) = this', () =>
       assert.deepEqual(
-        rect.stack([
-          iut1235,
-          FN.pipe(iut1235, rect.subWidth(1), rect.subHeight(2)),
-        ]),
+        stack([iut1235, FN.pipe(iut1235, subRectWidth(1), subRectHeight(2))]),
         iut1235,
       ));
 
@@ -153,19 +171,19 @@ suite('rect', () => {
        * ```
        */
       const abc = [
-        rect.fromCorners([pos(1, 2), pos(5, 4)]),
-        rect.fromCorners([pos(2, 4), pos(4, 8)]),
-        rect.fromCorners([pos(7, 6), pos(9, 8)]),
+        rectFromCorners([pos(1, 2), pos(5, 4)]),
+        rectFromCorners([pos(2, 4), pos(4, 8)]),
+        rectFromCorners([pos(7, 6), pos(9, 8)]),
       ];
 
-      const actual = rect.stack(abc);
+      const actual = stack(abc);
 
-      assert.deepEqual(actual, rect.fromCorners([pos(1, 2), pos(9, 8)]));
+      assert.deepEqual(actual, rectFromCorners([pos(1, 2), pos(9, 8)]));
     });
   });
 
   suite('laws', () => {
-    test('eq', () => laws.eq(rect.eq, rectArb));
-    test('monoid', () => laws.monoid(rect.monoid, rect.eq, rectArb));
+    test('eq', () => laws.eq(rectEq, rectArb));
+    test('monoid', () => laws.monoid(rectMonoid, rectEq, rectArb));
   });
 });

@@ -37,6 +37,6 @@ export const matchOrientation =
     o === 'horizontal' ? horizontal : vertical;
 
 /** `Orientation` `Show` instance */
-export const show: SH.Show<Orientation> = {
+export const showOrientation: SH.Show<Orientation> = {
   show: matchOrientation('↔', '↕'),
 };

@@ -16,10 +16,6 @@ set -Eeuo pipefail
 #
 # 4. tsconfig_tests_(local|shared) - typescript configuration file for unit tests
 #
-# 5. api-extractor(local|shared|base) - API-extractor configuration
-#    the local config files are copies of the shared file and all point at the
-#    base configuration.
-#
 # Every project can add a depends.txt file, possibly empty, which will be added
 # to the shared depnedencies from the shared package.json. The file can include
 # two types of lines:
@@ -36,7 +32,6 @@ set -Eeuo pipefail
 export project project_name project_path runner project_git \
 config_shared tests test_unit_config_local package_config_local \
 tsconfig_local tsconfig_tests_local deps_local deps_tmp project_readme \
-api_extractor_local
 
 check_arg 'project name' "${1:- }"
 
@@ -66,10 +61,6 @@ tsconfig_local="$project_path/tsconfig.json"
 # 4. Typescript testing config
 tsconfig_tests_local="$tests/tsconfig.json"
 
-# 5. API-extractor configuration
-api_extractor_local="$project_path/api-extractor.json";
-
-tsconfig_tests_local="$tests/tsconfig.json"
 # 6. Local project overrides
 deps_local="$project_path/depends.txt"
 deps_tmp="${deps_local}.tmp"

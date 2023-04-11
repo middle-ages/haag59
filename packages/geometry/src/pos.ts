@@ -21,7 +21,7 @@ import {
   Unary,
 } from 'commons';
 import { lens as LE } from 'monocle-ts';
-import { build as buildSize, inc as incSize, Size } from './size.js';
+import { buildSize as buildSize, incSize as incSize, Size } from './size.js';
 
 export const keys = ['top', 'left'] as const;
 

@@ -27,7 +27,6 @@
     "eslint-plugin-vitest-globals": "^1.2.0",
     "prettier": "^2.8.3",
     "ts-node": "^10.9.1",
-    "tsup": "^6.5.0",
     "tsx": "^3.12.2",
     "typescript": "^4.9.4"
   },
@@ -44,8 +43,8 @@
     "fp-ts"
   ],
   "engines": {
-    "pnpm": "^7.26.0",
-    "node": "^19.4.0"
+    "pnpm": ">= 8.0.0",
+    "node": ">= 18.0.0"
   },
   "workspaces": [
     "packages/*"

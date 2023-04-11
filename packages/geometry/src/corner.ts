@@ -24,7 +24,7 @@ const sym: Corners = {
   bottomRight: '↘',
 };
 
-export const values = FN.pipe(
+export const cornerValues = FN.pipe(
   allCorners,
   RA.map(TU.dup),
   Object.fromEntries,
@@ -33,21 +33,21 @@ export const values = FN.pipe(
 };
 
 /** `string` to corner type guard */
-export const check = (d: string): d is Corner => d in sym;
+export const checkCorner = (d: string): d is Corner => d in sym;
 
 /** Map over all corners to make a 4-tuple */
-export const map = <R>(f: Unary<Corner, R>) =>
+export const mapCorner = <R>(f: Unary<Corner, R>) =>
   FN.pipe(allCorners, RA.map(f)) as Tuple4<R>;
 
 /** Zip a 4-tuple with the corners */
-export const zip = <R>(r: Tuple4<R>) =>
+export const zipCorner = <R>(r: Tuple4<R>) =>
   FN.pipe(allCorners, RA.zip(r)) as Tuple4<[Corner, R]>;
 
 /**
  * Create a cornered from a tuple in order: top left, top right, bottom left,
  * bottom right.
  */
-export const fromTuple = <T>([
+export const cornerFromTuple = <T>([
   topLeft,
   topRight,
   bottomLeft,
@@ -60,10 +60,11 @@ export const fromTuple = <T>([
 });
 
 /** Create a `Cornered<T>` of a single value */
-export const singleton = <T>(t: T): Cornered<T> => fromTuple([t, t, t, t]);
+export const singletonCorner = <T>(t: T): Cornered<T> =>
+  cornerFromTuple([t, t, t, t]);
 
 /** `Corner` `Show` instance */
-export const show: SH.Show<Corner> = { show: corner => sym[corner] };
+export const showCorner: SH.Show<Corner> = { show: corner => sym[corner] };
 
 /** Convert a string of 4 border characters to a `Corners` */
 export const cornered: Unary<string, Corners> = quad => {

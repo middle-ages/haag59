@@ -16,7 +16,6 @@
 #  2. Package    config      ⇒ project package.json
 #  3. Typescript config      ⇒ project tsconfig.json
 #  4. Typescript test config ⇒ project tests/ dir
-#  5. API-extactor config    ⇒ project dir
 #
 # Project Customizations Applied
 #
@@ -42,7 +41,6 @@ copy_uncommented ① "$test_unit_config_shared" "$test_unit_config_local"
 copy ② "$package_config_shared" "$package_config_local"
 copy ③ "$tsconfig_shared"       "$tsconfig_local"
 copy ④ "$tsconfig_tests_shared" "$tsconfig_tests_local"
-copy ⑤ "$api_extractor_shared"  "$api_extractor_local"
 
 fix_project_name ⑥
 fix_project_description ⑦

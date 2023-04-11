@@ -1,8 +1,6 @@
-import { dir, orient } from 'geometry';
+import { singletonDir, direct, orient } from 'geometry';
 import { array as AR, function as FN } from 'fp-ts';
 import { solid, space } from './other.js';
-
-const { singleton, direct } = dir;
 
 const [dot, lineDash, wide, thickDot, thickDash, thickWide] = FN.pipe(
   ['┈┊', '┄┆', '╌╎', '┉┋', '┅┇', '╍╏'],
@@ -31,6 +29,6 @@ export const line = {
   dash,
   double: orient('═║'),
   halfSolid: direct('▀▐▄▌'),
-  space: singleton(space),
-  solid: singleton(solid),
+  space: singletonDir(space),
+  solid: singletonDir(solid),
 } as const;

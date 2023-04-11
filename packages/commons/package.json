@@ -22,7 +22,6 @@
     "build": "tsc",
     "rebuild": "pnpm clean && pnpm install && pnpm lint && pnpm build",
     "build:test": "pnpm rebuild && pnpm test",
-    "api": "api-extractor run --local --verbose",
     "run": "pnpm tsx app/index.ts",
     "run:node": "node esm/app/index.js",
     "check": "pnpm build:test && pnpm run run && pnpm run:node",
@@ -38,7 +37,6 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.0.1",
-    "@microsoft/api-extractor": "^7.34.4",
     "@tsconfig/node18-strictest-esm": "^1.0.1",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.49.0",

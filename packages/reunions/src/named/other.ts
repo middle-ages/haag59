@@ -1,6 +1,4 @@
-import { dir } from 'geometry';
-
-const { direct } = dir;
+import { direct } from 'geometry';
 
 export const tee = {
   ...direct('┴├┬┤'),

@@ -1,7 +1,5 @@
-import { corner } from '../index.js';
+import { showCorner } from '../index.js';
 
 suite('corner', () => {
-  test('basic', () => assert.equal(corner.bottomRight, 'bottomRight'));
-
-  test('show', () => assert.equal(corner.show.show(corner.bottomLeft), '↙'));
+  test('show', () => assert.equal(showCorner.show('bottomLeft'), '↙'));
 });

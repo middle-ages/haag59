@@ -24,11 +24,11 @@ export const value = FN.pipe(all, RA.map(TU.dup), Object.fromEntries) as {
 };
 
 export const borderDirSingleton = <T>(t: T): Bordered<T> => ({
-    ...dir.singleton(t),
-    ...corner.singleton(t),
+    ...dir.singletonDir(t),
+    ...corner.singletonCorner(t),
   }),
   sym: Unary<BorderDir, string> = bd =>
-    dir.check(bd) ? dir.show.show(bd) : corner.show.show(bd);
+    dir.checkDir(bd) ? dir.showDir.show(bd) : corner.showCorner.show(bd);
 
 export const mapBorderDir = <R>(f: Unary<BorderDir, R>) =>
     FN.pipe(all, RA.map(f)) as TupleN<R, 8> & R[],
@@ -52,7 +52,7 @@ export const [isHorizontalBorderDir, isVerticalBorderDir] = [
   ];
 
 /**  What are the 3 border dirs required to show a border at a direction? */
-export const snugBorderDirs: Unary<Dir, Tuple3<BorderDir>> = dir.match(
+export const snugBorderDirs: Unary<Dir, Tuple3<BorderDir>> = dir.matchDir(
   ['topLeft', 'top', 'topRight'],
   ['topRight', 'right', 'bottomRight'],
   ['bottomLeft', 'bottom', 'bottomRight'],
@@ -71,9 +71,9 @@ export const snugCorners: Unary<Dir, Pair<Corner>> = dir => {
  */
 export const snug = (d: Dir) => {
   const [preCorner, postCorner] = snugCorners(d),
-    [pre, post] = dir.snug(d);
+    [pre, post] = dir.snugDir(d);
 
   return [pre, preCorner, d, postCorner, post] as TupleN<BorderDir, 5>;
 };
 
-export const show: SH.Show<BorderDir> = { show: sym };
+export const showBorderDir: SH.Show<BorderDir> = { show: sym };

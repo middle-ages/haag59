@@ -15,7 +15,6 @@ config_shared=config; # shared config dir
 
 export test_unit_config_shared package_config_shared
 export tsconfig_shared tsconfig_tests_shared
-export api_extractor_shared
 
 # 1. Unit test config
 test_unit_config_shared="$config_shared/vitest.config.shared.ts"
@@ -28,9 +27,6 @@ tsconfig_shared="$config_shared/tsconfig.shared.json"
 
 # 4. Typescript testing config
 tsconfig_tests_shared="$config_shared/tsconfig.tests.shared.json"
-
-# 5. api-extractor config
-api_extractor_shared="$config_shared/api-extractor.shared.json"
 
 function list_projects {
   for project in packages/*; do
