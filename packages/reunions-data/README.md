@@ -64,14 +64,14 @@ mapping of relations between them, and more. The goal is to make it easier to
 work with these drawing characters. The files: 
 
 1. Stacking
-    1. [all-stacks.csv](#all-stackscsv) `146K` file: [` 🗀 all-stacks.csv`](all-stacks.csv)
-    1. [all-stacks-unquoted.csv](#all-stacks-unquotedcsv) `97K` file: [` 🗀 all-stacks-unquoted.csv`](all-stacks-unquoted.csv)
-    1. [stack-table.csv](#stack-tablecsv) `155K` file: [` 🗀 stack-table.csv`](stack-table.csv)
-    1. [stack-table-dense.csv](#stack-tabledensecsv) `88K` file: [` 🗀 stack-table-dense.csv`](stack-table-dense.csv)
+    1. [all-stacks.csv](#all-stackscsv) `146K` file: [` 🗀 all-stacks.csv`](data/all-stacks.csv)
+    1. [all-stacks-unquoted.csv](#all-stacks-unquotedcsv) `97K` file: [` 🗀 all-stacks-unquoted.csv`](data/all-stacks-unquoted.csv)
+    1. [stack-table.csv](#stack-tablecsv) `155K` file: [` 🗀 stack-table.csv`](data/stack-table.csv)
+    1. [stack-table-dense.csv](#stack-tabledensecsv) `88K` file: [` 🗀 stack-table-dense.csv`](data/stack-table-dense.csv)
 1. Borders
-    1. [named-border-sets.csv](#named-border-setscsv) `3K` file: [` 🗀 named-border-sets.csv`](named-border-sets.csv)
-    1. [named-border-sets.json](#named-border-setsjson) `7K` file: [` 🗀 named-border-sets.json`](named-border-sets.json)
-    1. [named-border-sets.txt](#named-border-setstxt) `4K` file: [` 🗀 named-border-sets.txt`](named-border-sets.txt)
+    1. [named-border-sets.csv](#named-border-setscsv) `3K` file: [` 🗀 named-border-sets.csv`](data/named-border-sets.csv)
+    1. [named-border-sets.json](#named-border-setsjson) `7K` file: [` 🗀 named-border-sets.json`](data/named-border-sets.json)
+    1. [named-border-sets.txt](#named-border-setstxt) `4K` file: [` 🗀 named-border-sets.txt`](data/named-border-sets.txt)
 
 The rest of this document describes the files and some ideas on how to use them.
 Reading is not at all required for using the simple and self-explanatory files
@@ -103,7 +103,7 @@ And then use it to stack characters so:
 
 ## The Files
 
-### [all-stacks.csv](all-stacks.csv)
+### [all-stacks.csv](data/all-stacks.csv)
 
 <a id="three-rows-img"></a>
 
@@ -123,13 +123,13 @@ Some of the stackings for horizontal and vertical lines, for example, will be fo
 
 <p></p>
 
-### [all-stacks-unquoted.csv](all-stacks-unquoted.csv)
+### [all-stacks-unquoted.csv](data/all-stacks-unquoted.csv)
 
 Is exactly like [all-stacks](#all-stackscsv), but skips the character quoting.
 
 <br clear="all"/>
 
-### [stack-table.csv](stack-table.csv)
+### [stack-table.csv](data/stack-table.csv)
 
 <a id="stack-table-img"></a>
 
@@ -168,7 +168,7 @@ The table is made up of _four_ parts:
    appear as a quoted space character (`“  ”`), because no Unicode character
    matches their stacking.
 
-### [stack-table-dense.csv](stack-table-dense.csv)
+### [stack-table-dense.csv](data/stack-table-dense.csv)
 
 A table showing the stackings between characters exactly like
 [stack-table.csv](#stack-tablecsv), except you will find here only `121` of the
@@ -177,14 +177,14 @@ with every other character has been removed. What remains is a dense table with
 no holes: any character here can be stacked with every other character in
 the file, and so can their stacking result.
 
-### [stack-table-dense.ods](stack-table-dense.ods)
+### [stack-table-dense.ods](data/stack-table-dense.ods)
 
-This is a version of [stack-table-dense.csv](stack-table-dense.csv) formatted as
+This is a version of [stack-table-dense.csv](data/stack-table-dense.csv) formatted as
 a [LibreOffice Calc](https://www.libreoffice.org/discover/calc) spreadsheet.
 
 
 
-### [named-border-sets.csv](named-border-sets.csv)
+### [named-border-sets.csv](data/named-border-sets.csv)
 
 This file lists 28 named border sets. A border set is composed of 8 characters, one for each border direction:
 
@@ -206,7 +206,13 @@ The CSV file encodes this as a row for each border set, with the name of the set
                                                    └────┘
 ```
 
-### [named-border-sets.json](named-border-sets.json)
+The <a
+href="https://middle-ages.github.io/haag59/site/named-border-sets.html">Named
+Border Sets</a> diagram shows every border set. Click a border to copy the
+border characters to your clipboard or an individual glyph to copy just one
+character.
+
+### [named-border-sets.json](data/named-border-sets.json)
 
 Is exactly like [named-border-sets.csv](#named-border-setscsv), but in JSON. It
 is an array of named border set entries. A named border entry in Typescript is a
@@ -241,7 +247,7 @@ Here for example, is the entry for the _hMcGugan_ border set:
 ```
   
 
-In [named-border-sets.txt](named-border-sets.txt) file this border should look like the image below:
+In [named-border-sets.txt](data/named-border-sets.txt) file this border should look like the image below:
 
 <br/>
 
@@ -249,7 +255,7 @@ In [named-border-sets.txt](named-border-sets.txt) file this border should look l
 
 <br/>
 
-### [named-border-sets.txt](named-border-sets.txt)
+### [named-border-sets.txt](data/named-border-sets.txt)
 
 <a id="borders-img"></a>
 
@@ -259,11 +265,16 @@ In [named-border-sets.txt](named-border-sets.txt) file this border should look l
   <img alt="Grid of Named Border Sets" src="doc/imagesV4/named-border-sets-light.svg" width="35%" align="right">
 </picture>
 
-Here you will find the exact same information as in the [named-border-sets.csv](#named-border-setscsv) file, but shows the borders in a 7x4 grid, each bordering its own name. The [image on the right](#borders-img) shows how it would appear in a text editor.
+Here you will find the exact same information as in the
+[named-border-sets.csv](#named-border-setscsv) file, but shows the borders in a
+7x4 grid, each bordering its own name. The [image on the right](#borders-img)
+shows how it would appear in a text editor.
 
-This can be used as a visual index to the corresponding CSV file, or as a source from which borders are copied and then resized.
+This can be used as a visual index to the corresponding CSV file, or as a source
+from which borders are copied and then resized.
 
-There are `56` border characters in the union of all named border set. Here are all the border characters from all sets:
+There are `56` border characters in the union of all named border set. Here are
+all the border characters from all sets:
 
 ```
 ─ ╌ ┄ ┈ │ ┃ ┌ ┐ ┍ ┑ ┎ ┒ ┏ ┓ ╒ ╕ ╓ ╖ ╔ ╗
@@ -280,26 +291,28 @@ There are `56` border characters in the union of all named border set. Here are 
   <img alt="Grid of Named Border Sets" src="doc/imagesV4/border-glyphs-light.png" width="50%" align="right">
 </picture>
 
-And here they are sorted by code point:
-
-<br clear="all"/>
+The <a title="Diagram of all glyphs from all named border sets"
+href="https://middle-ages.github.io/haag59/site/border-glyphs.html">All Border
+Glyphs</a> diagram shows every character from every named border. Click to copy
+one into your clipboard.
 
 ## Plan
 
 - [x] stack
 - [x] border sets
-- [x] relations
+- [ ] relations
 - [ ] elbows
 - [ ] classification
 - [ ] border set relations
+- [ ] CLI and web helpers
 
 
 ## See Also
 
 * Unicode [Box Drawing](https://www.unicode.org/charts/PDF/U2500.pdf) range
 * Unicode [Block Elements](https://www.unicode.org/charts/PDF/U2580.pdf) range
-* [reunions](../reunions/README.md) - the Typescript library that computes these things
 * The “[joining-borders](https://github.com/jtdaugherty/brick/blob/master/docs/guide.rst#joining-borders)” feature of the Haskell [brick](https://hackage.haskell.org/package/brick) library
+* [reunions](../reunions/README.md) - the Typescript library that computes these things
 
 ## Project Development
 
